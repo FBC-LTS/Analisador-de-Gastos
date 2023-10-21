@@ -11,12 +11,6 @@ public class Classificacao {
         this.subCategoria = subCategoria; // 0 = none ; 1 = comercial ; 2 = industrial ;
         nomearClassifcacao();
     }
-    // Construtor com valor padrão para subCategoria
-    public Classificacao(int codCategoria) {
-        this.codCategoria = codCategoria;
-        this.subCategoria = 0; // Valor padrão para subCategoria
-        nomearClassifcacao();
-    }
 
     void nomearClassifcacao() {
         System.out.println("nomeando.");
