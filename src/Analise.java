@@ -1,13 +1,22 @@
-import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+import tiposPack.Gasto;
 
 public class Analise {
-    private Array listaDeGastos(Gasto);
+    private List<Gasto> listaDeGastos;
     private double faturamento;
     private String titulo;
-    double totalAtivo;
-    double totalPassivo;
     private double diferenca;
+    public double totalAtivo;
+    public double totalPassivo;
+    
+    
+    public Analise(double faturamento, String titulo) {
+        this.titulo = titulo;
+        this.faturamento = faturamento;
+        listaDeGastos = new ArrayList<>();
 
+    }
     void registrarGasto() {
 
     }
@@ -27,16 +36,19 @@ public class Analise {
     void calcularPatLiq() {
 
     }
-
-    void getTitulo(){
-
+    double getDiferenca(){
+        return this.diferenca;
     }
 
-    void getFaturamento() {
-
+    String getTitulo(){
+        return this.titulo;
     }
 
-    void getListaDeGastos() {
+    double getFaturamento() {
+        return this.faturamento;
+    }
 
+    List<Gasto> getListaDeGastos() {
+        return listaDeGastos;
     }
 }
