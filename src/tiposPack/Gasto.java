@@ -1,9 +1,9 @@
 package tiposPack;
 
 public class Gasto {
-    String nome;
-    double valor;
-    int tipo; // 0= passivo ; 1= ativo ; 
+    public String nome;
+    public double valor;
+    public int tipo; // 0= passivo ; 1= ativo ; 
     private Classificacao classificacao;
 
     // contrutor com subcategoria
@@ -14,6 +14,9 @@ public class Gasto {
         this.classificacao = new Classificacao(codCategoria, subCategoria);
     }
 
+    public int getTipo(){
+        return tipo;
+    }
     public String getClassificacao(){
         return this.classificacao.nome;
     }
