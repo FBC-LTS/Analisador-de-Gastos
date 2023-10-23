@@ -1,7 +1,7 @@
 package tiposPack;
 
 public class Gasto {
-    public String nome;
+    public  String nome;
     public double valor;
     public int tipo; // 0= passivo ; 1= ativo ; 
     private Classificacao classificacao;

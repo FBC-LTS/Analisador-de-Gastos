@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import tiposPack.Gasto;
 
+
 public class Analise {
     private List<Gasto> listaDeGastos;
     private double faturamento;
@@ -17,11 +18,15 @@ public class Analise {
         listaDeGastos = new ArrayList<>();
 
     }
+
     void registrarGasto(String nome, double valor, int tipo, int codCategoria, int subCategoria) {
         Gasto novoGasto = new Gasto(nome, valor, tipo, codCategoria, subCategoria);
+                if (novoGasto.getNome().equals(nome)) {
+            System.out.println("Um gasto com o mesmo nome já existe, nome duplicados não são aceitos.");
+            return;
+            }
         listaDeGastos.add(novoGasto);
     }
-
     void excluirGasto(String nome) {
         // método para encontrar e remover uma instância da gasto dentro da listaDeGastos utilizando a variável "nome" da classe Gasto
         Gasto gastoToRemove = null;
@@ -37,7 +42,7 @@ public class Analise {
         }
     }
 
-  void calcularAtivo() {
+    void calcularAtivo() {
         totalAtivo = 0.0; // Inicializa o totalAtivo com zero
 
         for (Gasto gasto : listaDeGastos) {
