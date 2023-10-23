@@ -7,7 +7,6 @@ public class Analise {
     private List<Gasto> listaDeGastos;
     private double faturamento;
     private String titulo;
-    private double diferenca;
     public double totalAtivo;
     public double totalPassivo;
     public double patLiq;
@@ -73,9 +72,6 @@ public class Analise {
         patLiq = totalAtivo - totalAtivo;
     }
     // Getters e Setters 
-    public double getDiferenca(){
-        return this.diferenca;
-    }
     public String getTitulo(){
         return this.titulo;
     }
