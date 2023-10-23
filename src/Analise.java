@@ -17,11 +17,18 @@ public class Analise {
         listaDeGastos = new ArrayList<>();
 
     }
-    void registrarGasto() {
+    public void registrarGasto(String nome, int tipo, double valor) {
+        this.nome = nome;
+        this.valor = valor;
+        this.tipo = tipo;
+        System.out.println("Gasto registrado: R$" + valor + tipo + nome);
+        registrarGasto rg = new registrarGasto();
 
     }
 
-    void excluirGasto() {
+    public void excluirGasto(Gasto gasto, List<Gasto> listaGastos ) {
+        listaGastos.remove(gasto);
+        System.out.println("Gasto excluido!");
 
     }
 
