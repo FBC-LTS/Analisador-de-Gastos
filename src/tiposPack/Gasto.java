@@ -14,6 +14,9 @@ public class Gasto {
         this.classificacao = new Classificacao(codCategoria, subCategoria);
     }
 
+    public String getNome() {
+        return nome;
+    }
     public int getTipo(){
         return tipo;
     }

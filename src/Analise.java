@@ -9,7 +9,7 @@ public class Analise {
     private double diferenca;
     public double totalAtivo;
     public double totalPassivo;
-   
+    public double patLiq;
     
     public Analise(double faturamento, String titulo) {
         this.titulo = titulo;
@@ -17,12 +17,24 @@ public class Analise {
         listaDeGastos = new ArrayList<>();
 
     }
-    void registrarGasto() {
-
+    void registrarGasto(String nome, double valor, int tipo, int codCategoria, int subCategoria) {
+        Gasto novoGasto = new Gasto(nome, valor, tipo, codCategoria, subCategoria);
+        listaDeGastos.add(novoGasto);
     }
 
-    void excluirGasto() {
-
+    void excluirGasto(String nome) {
+        // método para encontrar e remover uma instância da gasto dentro da listaDeGastos utilizando a variável "nome" da classe Gasto
+        Gasto gastoToRemove = null;
+        for (Gasto gasto : listaDeGastos) {
+            if (gasto.getNome().equals(nome)) {
+                gastoToRemove = gasto;
+                break;
+            }
+        }
+        
+        if (gastoToRemove != null) {
+            listaDeGastos.remove(gastoToRemove);
+        }
     }
 
   void calcularAtivo() {
@@ -55,22 +67,50 @@ public class Analise {
         }
     }
 
-    void calcularPatLiq() {
-
+    public void calcularPatLiq() {
+        patLiq = totalAtivo - totalAtivo;
     }
-    double getDiferenca(){
+    // Getters e Setters 
+    public double getDiferenca(){
         return this.diferenca;
     }
-
-    String getTitulo(){
+    public void setDiferenca(double diferenca) {
+        this.diferenca = diferenca;
+    }
+    public String getTitulo(){
         return this.titulo;
     }
-
-    double getFaturamento() {
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+    public double getFaturamento() {
         return this.faturamento;
     }
-
-    List<Gasto> getListaDeGastos() {
+    public void setFaturamento(double faturamento) {
+        this.faturamento = faturamento;
+    }
+    public List<Gasto> getListaDeGastos() {
         return listaDeGastos;
+    }
+    public void setListaDeGastos(List<Gasto> listaDeGastos) {
+        this.listaDeGastos = listaDeGastos;
+    }
+    public double getTotalAtivo() {
+        return totalAtivo;
+    }
+    public void setTotalAtivo(double totalAtivo) {
+        this.totalAtivo = totalAtivo;
+    }
+    public double getTotalPassivo() {
+        return totalPassivo;
+    }
+    public void setTotalPassivo(double totalPassivo) {
+        this.totalPassivo = totalPassivo;
+    }
+    public double getPatLiq() {
+        return patLiq;
+    }
+    public void setPatLiq(double patLiq) {
+        this.patLiq = patLiq;
     }
 }
