@@ -23,13 +23,15 @@ public class Analise {
         this.currentId = this.currentId+1;
         Gasto novoGasto = new Gasto(nome, this.currentId, valor, tipo, codCategoria, subCategoria);
         listaDeGastos.add(novoGasto);
+        somarAtivo(novoGasto);
     }
-    void excluirGasto(int id) {
-        // método para encontrar e remover uma instância da gasto dentro da listaDeGastos utilizando a variável "id" da classe Gasto
+    void excluirGasto(int id) { // método para encontrar e remover uma instância da gasto dentro da listaDeGastos utilizando a variável "id" da classe Gasto
         Gasto gastoToRemove = null;
         for (Gasto gasto : listaDeGastos) {
-            if (gasto.getId()==(this.currentId)) {
+            if (gasto.getId()==(id)) {
                 gastoToRemove = gasto;
+                subtrairAtivo(gastoToRemove);
+                subtrairPassivo(gastoToRemove);
                 break;
             }
         }
@@ -37,40 +39,34 @@ public class Analise {
             listaDeGastos.remove(gastoToRemove);
         }
     }
+ 
+    void somarAtivo(Gasto novoGasto) {
+        if (novoGasto.getTipo() == 0) { // Verifica se o novo gasto é ativo
+            totalAtivo += novoGasto.valor; // Soma o valor do novo gasto ao total ativo
+        } // Se for um passivo, retira do total de ativo
 
-    void calcularAtivo() {
-        totalAtivo = 0.0; // Inicializa o totalAtivo com zero
+    }
+    void subtrairAtivo(Gasto gastoToRemove) {
+        if (gastoToRemove.getTipo() == 0) { // Verifica se o novo gasto é ativo
+            totalAtivo -= gastoToRemove.valor; // Subtrai o valor do gasto que está sendo removido do total ativo
+        } 
+    }   
 
-        for (Gasto gasto : listaDeGastos) {
-            // Chama o método getTipo para obter o tipo de cada gasto
-            int tipoDoGasto = gasto.getTipo();
-
-            // Faça o que for necessário com o tipo do gasto
-            // Por exemplo, você pode somar os gastos ativos
-            if (tipoDoGasto == 1) { // 1 representa gasto ativo
-                totalAtivo += gasto.valor;
-            }
+    void somarPassivo(Gasto novoGasto) {
+        if (novoGasto.getTipo() == 1) {
+            totalPassivo += novoGasto.valor;
         }
     }
-
-    void calcularPassivo() {
-        totalPassivo = 0.0; // Inicializa o totalPassivo com zero
-
-        for (Gasto gasto : listaDeGastos) {
-            // Chama o método getTipo para obter o tipo de cada gasto
-            int tipoDoGasto = gasto.getTipo();
-
-            // Faça o que for necessário com o tipo do gasto
-            // Por exemplo, você pode somar os gastos passivos
-            if (tipoDoGasto == 2) { // 2 representa gasto passivo
-                totalPassivo += gasto.valor;
-            }
-        }
-    }
+    void subtrairPassivo(Gasto gastoToRemove) {
+        if (gastoToRemove.getTipo() == 1) {
+            totalAtivo -= gastoToRemove.valor; 
+        } 
+    }   
 
     public void calcularPatLiq() {
         patLiq = totalAtivo - totalAtivo;
     }
+    
     // Getters e Setters 
     public String getTitulo(){
         return this.titulo;

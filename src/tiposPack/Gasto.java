@@ -3,9 +3,6 @@ package tiposPack;
 public class Gasto {
     public String nome;
     public int id;
-    public void setId(int id) {
-        this.id = id;
-    }
     public double valor;
     public int tipo; // 0= passivo ; 1= ativo ; 
     private Classificacao classificacao;
@@ -19,7 +16,9 @@ public class Gasto {
         this.id = id;
     }
 
-    
+    public double getValor() {
+        return valor;
+    }
     public int getId() {
         return id;
     }
