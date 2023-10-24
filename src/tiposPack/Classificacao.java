@@ -39,5 +39,4 @@ public class Classificacao {
             this.nome = this.nome + " industrial";
         }
     }
-
 }

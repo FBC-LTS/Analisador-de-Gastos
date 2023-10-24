@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 import tiposPack.Gasto;
 
@@ -12,19 +11,17 @@ public class Analise {
     public double patLiq;
     private int currentId;
     
-    public Analise(double faturamento, String titulo) {
+    public Analise(double faturamento, String titulo, List<Gasto> listaDeGastos) {
         this.titulo = titulo;
         this.faturamento = faturamento;
-        listaDeGastos = new ArrayList<>();
+        this.listaDeGastos = listaDeGastos;
 
     }
-
     void registrarGasto(String nome, double valor, int tipo, int codCategoria, int subCategoria) {
         this.currentId = this.currentId+1;
         Gasto novoGasto = new Gasto(nome, this.currentId, valor, tipo, codCategoria, subCategoria);
         listaDeGastos.add(novoGasto);
         somarAtivo(novoGasto);
-        somarPassivo(novoGasto);
     }
     void excluirGasto(int id) { // método para encontrar e remover uma instância da gasto dentro da listaDeGastos utilizando a variável "id" da classe Gasto
         Gasto gastoToRemove = null;
@@ -68,6 +65,13 @@ public class Analise {
         patLiq = totalAtivo - totalAtivo;
     }
     
+    public String getListaDeGastosString() {
+        StringBuilder sb = new StringBuilder();
+        for (Gasto gasto : listaDeGastos) {
+            sb.append(gasto.leitor()).append("\n");
+        }
+        return sb.toString();
+    }
     // Getters e Setters 
     public String getTitulo(){
         return this.titulo;

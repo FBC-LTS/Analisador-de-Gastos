@@ -15,6 +15,9 @@ public class Gasto {
         this.classificacao = new Classificacao(codCategoria, subCategoria);
         this.id = id;
     }
+    public String leitor() {
+        return "Nome: " + nome + ", Valor: " + valor + ", Tipo: " + (tipo == 0 ? "Ativo" : "Passivo") + ", Classificação: " + classificacao.nome;
+    }
 
     public double getValor() {
         return valor;
