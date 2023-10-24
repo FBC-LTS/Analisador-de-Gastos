@@ -15,13 +15,13 @@ public class Analise {
         this.titulo = titulo;
         this.faturamento = faturamento;
         this.listaDeGastos = listaDeGastos;
-
     }
     void registrarGasto(String nome, double valor, int tipo, int codCategoria, int subCategoria) {
         this.currentId = this.currentId+1;
         Gasto novoGasto = new Gasto(nome, this.currentId, valor, tipo, codCategoria, subCategoria);
         listaDeGastos.add(novoGasto);
         somarAtivo(novoGasto);
+        somarPassivo(novoGasto);
         System.out.println("Gasto '" + novoGasto.getNome() + "' adicionado!");
     }
     void excluirGasto(int id) { // método para encontrar e remover uma instância da gasto dentro da listaDeGastos utilizando a variável "id" da classe Gasto
@@ -64,7 +64,7 @@ public class Analise {
     }   
 
     public void calcularPatLiq() {
-        patLiq = totalAtivo - totalAtivo;
+        patLiq = totalAtivo - totalPassivo;
     }
     
     public String getListaDeGastosString() {

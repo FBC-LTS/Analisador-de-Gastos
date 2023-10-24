@@ -39,4 +39,9 @@ public class Classificacao {
             this.nome = this.nome + " industrial";
         }
     }
+
+    public String getNome() {
+        return nome;
+    }
+
 }
