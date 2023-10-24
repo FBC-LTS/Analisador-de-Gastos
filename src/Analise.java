@@ -22,6 +22,7 @@ public class Analise {
         Gasto novoGasto = new Gasto(nome, this.currentId, valor, tipo, codCategoria, subCategoria);
         listaDeGastos.add(novoGasto);
         somarAtivo(novoGasto);
+        System.out.println("Gasto '" + novoGasto.getNome() + "' adicionado!");
     }
     void excluirGasto(int id) { // método para encontrar e remover uma instância da gasto dentro da listaDeGastos utilizando a variável "id" da classe Gasto
         Gasto gastoToRemove = null;
@@ -30,6 +31,7 @@ public class Analise {
                 gastoToRemove = gasto;
                 subtrairAtivo(gastoToRemove);
                 subtrairPassivo(gastoToRemove);
+                System.out.println("Gasto '" + gasto.getNome() + "' removido");
                 break;
             }
         }

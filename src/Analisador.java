@@ -15,6 +15,7 @@ public class Analisador {
         analise.registrarGasto("Gasto 3", 100.0, 0, 4, 1); // Gasto ativo
         analise.registrarGasto("Gasto 2", 50.0, 1, 2, 2); // Gasto passivo
 
+        System.out.println(analise.getListaDeGastosString());
         // Exemplo de exclusão de gasto
         analise.excluirGasto(1); // Supondo que 1 seja o ID do gasto a ser excluído
         // Exibir o total ativo
