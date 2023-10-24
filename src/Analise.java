@@ -60,8 +60,8 @@ public class Analise {
     }
     void subtrairPassivo(Gasto gastoToRemove) {
         if (gastoToRemove.getTipo() == 1) {
-            totalAtivo -= gastoToRemove.valor; 
-        } 
+            totalPassivo -= gastoToRemove.valor; 
+        }
     }   
 
     public void calcularPatLiq() {
