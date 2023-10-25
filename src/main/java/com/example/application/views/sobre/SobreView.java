@@ -20,26 +20,33 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 public class SobreView extends VerticalLayout {
 
     public SobreView() {
+        
         VerticalLayout container = new VerticalLayout();
         HorizontalLayout container_campos = new HorizontalLayout();
         VerticalLayout container_sobre = new VerticalLayout();
         VerticalLayout container_autores = new VerticalLayout();
         H1 titulo = new H1("Sobre");
+        
+
+        container.addClassName("container");
+        titulo.addClassName("centraliza-titulo");
+        container.add(titulo);
+        container_sobre = sobreProjeto(container_sobre);
+        container_campos.add(container_sobre);
+        container_campos.add(container_autores);
+        container.add(container_campos);
+        add(container);
+    }
+
+    private VerticalLayout sobreProjeto(VerticalLayout container){
         H1 titulo_analisador = new H1("O Analisador de Gastos");
         Text texto_tst = new Text("é uma aplicação intuitiva e eficiente projetada para simplificar o processo de registro, \r\r\n" + //
                 "categorização e análise de despesas financeiras pessoais ou comerciais. Essa ferramenta \r\r\n" + //
                 "versátil oferece recursos essenciais para auxiliar os usuários a manter o controle de seus \r\n" + //
                 "gastos, \rcategorizá-los e gerar relatórios detalhados em formato CSV.");
-
-        container.addClassName("container");
-        titulo.addClassName("centraliza-titulo");
-        container_sobre.add(titulo_analisador);
-        container_sobre.add(texto_tst);
-        container.add(titulo);
-        container_campos.add(container_sobre);
-        container_campos.add(container_autores);
-        container.add(container_campos);
-        add(container);
+        container.add(titulo_analisador);
+        container.add(texto_tst);
+        return container;
     }
 
 }
