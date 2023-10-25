@@ -1,5 +1,6 @@
 package com.example.application.views.inicio;
 
+import com.example.application.Analisador.Analise;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
