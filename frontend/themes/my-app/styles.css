@@ -1,0 +1,10 @@
+@import url('./main-layout.css');
+@import url('@fontsource/inter/index.css');    html {
+      --lumo-base-color: rgb(223, 223, 223);
+      --lumo-primary-color: rgb(30, 92, 102);
+      --lumo-primary-color-50pct: rgba(30, 92, 102, 0.5);
+      --lumo-primary-color-10pct: rgba(30, 92, 102, 0.1);
+      --lumo-primary-text-color: rgb(30, 92, 102);
+--lumo-font-family: Inter;
+
+    }
