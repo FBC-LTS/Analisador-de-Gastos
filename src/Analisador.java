@@ -4,12 +4,6 @@ import java.util.List;
 import Analisador.Analise;
 import Analisador.tiposPack.Gasto;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
-
 public class Analisador {
     public static void main(String[] args) {
         // Inicialização da lista de gastos
@@ -37,19 +31,22 @@ public class Analisador {
         System.out.println("Total Passivo: " + analise.getTotalPassivo());
         System.out.println("Patrimônio Líquido: " + analise.getPatLiq());
         System.out.println(analise.getListaDeGastosString());
-        
-        //Exportador para CSV (StandardCharsets.UTF_8 para ler os carácteres especiais)
-        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("analisedegastos.csv"), StandardCharsets.UTF_8))) {
-            writer.write("Nome, Valor, Tipo, Classificação\n");
-        
-            for (Gasto gasto : listaDeGastos) {
-                writer.write(gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Ativo" : "Passivo") + ", " + gasto.getClassificacao() + "\n");
-            }
-            String valorFormatado = String.format("Total de Ativos: %.2f, Total de Passivos: %.2f, Patrimônio Líquido: %.2f", analise.getTotalAtivo(), analise.getTotalPassivo(), analise.getPatLiq());
-            writer.write(valorFormatado);
-        } catch (IOException e) {
-            e.printStackTrace();
+        analise.exportador();
+        System.out.println("Mensagem de teste 1!!!!");
+
+        String nomeDoArquivo = "D:\\hahahasouprogramador\\Java\\github\\Gestor-Custos\\analisedegastos - Copia.csv"; // Substitua pelo caminho do seu arquivo CSV
+        Analise analiseImportada = analise.importarDados(nomeDoArquivo);
+    
+        if (analiseImportada != null) {
+            // Use a instância de Analise importada
+            System.out.println("Análise importada: " + analiseImportada.getTitulo());
+            // Resto do seu código para lidar com a análise importada
+        } else {
+            System.out.println("Falha na importação do arquivo.");
         }
+        System.out.println("Mensagem de teste 2!!!!");
+        analise.exportador();
+
     }
 }
 

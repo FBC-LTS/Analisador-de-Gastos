@@ -1,7 +1,19 @@
 package Analisador;
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 import Analisador.tiposPack.Gasto;
+import Analisador.tiposPack.Classificacao;
 
 
 public class Analise {
@@ -75,6 +87,106 @@ public class Analise {
             sb.append(gasto.leitor()).append("\n");
         }
         return sb.toString();
+    }
+
+    public void exportador(){
+        
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("analisedegastos.csv"), StandardCharsets.UTF_8))) {
+            writer.write("Nome, Valor, Tipo, Classificação\n");
+        
+            for (Gasto gasto : listaDeGastos) {
+                writer.write(gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Ativo" : "Passivo") + ", " + gasto.getClassificacao() + "\n");
+            }
+            
+            String valorFormatado = String.format("Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s", formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatLiq()));
+        writer.write(valorFormatado);
+        } catch (IOException e) {
+             e.printStackTrace();
+        }
+    }
+
+    public int mapearTipo(String tipo) {
+        if ("Ativo".equalsIgnoreCase(tipo)) {
+            return 1;
+        } else if ("Passivo".equalsIgnoreCase(tipo)) {
+            return 0;
+        }else {
+            // Lidar com outros casos ou erros, se necessário
+            return -1; // Por exemplo, retornar -1 para um caso inválido
+        }
+    }
+    public Classificacao numerarClassificacao(String nomeCategoria, String nomeSubCategoria) {
+        Classificacao classificacao = new Classificacao(0, 0);
+    
+        switch (nomeCategoria) {
+            case "Desembolso":
+                classificacao.codCategoria = 0;
+                break;
+            case "Perda":
+                classificacao.codCategoria = 1;
+                break;
+            case "Despesa":
+                classificacao.codCategoria = 2;
+                break;
+            case "Investimento":
+                classificacao.codCategoria = 3;
+                break;
+            case "Custo":
+                classificacao.codCategoria = 4;
+                if ("Comercial".equals(nomeSubCategoria)) {
+                    classificacao.subCategoria = 1;
+                } else if ("Industrial".equals(nomeSubCategoria)) {
+                    classificacao.subCategoria = 2;
+                }
+                break;
+            // Trate outros casos ou erros, se necessário
+        }
+    
+        return classificacao;
+    }
+
+    public Analise importarDados(String nomeDoArquivo) {
+    try (BufferedReader reader = new BufferedReader(new FileReader(nomeDoArquivo))) {
+        String line;
+        // Ler a primeira linha com os cabeçalhos, se houver
+        if ((line = reader.readLine()) != null) {
+            // Supondo que os cabeçalhos sejam: "Nome, Valor, Tipo, Classificação"
+            // Você pode processar essa linha, mas pode não ser necessária
+        }
+
+        Analise analise = new Analise(0.0, "Análise Importada", new ArrayList<>());
+
+        while ((line = reader.readLine()) != null) {
+            String[] dados = line.split(",");
+            String nome = dados[0];
+            double valor = Double.parseDouble(dados[1]);
+            String tipoString = "Ativo"; // ou "Passivo"
+            int tipo = mapearTipo(tipoString);
+            String classificacao = dados[3]; // Classificação completa
+
+            // Separe a classificação em categoria e subcategoria
+            String[] partesClassificacao = classificacao.split(",");
+            String nomeCategoria = partesClassificacao[0].trim(); // Categoria
+            String nomeSubCategoria = partesClassificacao.length > 1 ? partesClassificacao[1].trim() : null; // Subcategoria, se existir
+
+            // Chame o método para converter os nomes das categorias em objetos Classificacao
+            Classificacao classificacaoObj = numerarClassificacao(nomeCategoria, nomeSubCategoria);
+
+            // Adicione o gasto à análise
+            analise.registrarGasto(nome, valor, tipo, classificacaoObj.codCategoria, classificacaoObj.subCategoria);
+        }
+        return analise;
+        // Resto do código
+    } catch (IOException e) {
+        e.printStackTrace();
+        return null; // Trate os erros apropriadamente
+        }
+    }
+    
+    //Necessário para usar "." invés de "," na formatação
+    private String formatarValor(double valor) {
+    DecimalFormat df = new DecimalFormat("#0.00", new DecimalFormatSymbols(Locale.US));
+    return df.format(valor);
     }
     // Getters e Setters 
     public String getTitulo(){
