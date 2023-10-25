@@ -25,15 +25,18 @@ public class SobreView extends VerticalLayout {
         HorizontalLayout container_campos = new HorizontalLayout();
         VerticalLayout container_sobre = new VerticalLayout();
         VerticalLayout container_autores = new VerticalLayout();
-        H1 titulo = new H1("Sobre");
         
-
+        H1 titulo = new H1("Sobre");
+        container.add(titulo);
+        
         container.addClassName("container");
         titulo.addClassName("centraliza-titulo");
-        container.add(titulo);
+
         container_sobre = sobreProjeto(container_sobre);
-        container_campos.add(container_sobre);
+        
         container_campos.add(container_autores);
+        container_campos.add(container_sobre);
+        
         container.add(container_campos);
         add(container);
     }
