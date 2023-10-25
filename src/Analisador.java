@@ -1,11 +1,14 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
-import tiposPack.Gasto;
+import Analisador.Analise;
+import Analisador.tiposPack.Gasto;
+
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 
 public class Analisador {
     public static void main(String[] args) {
@@ -36,17 +39,17 @@ public class Analisador {
         System.out.println(analise.getListaDeGastosString());
         
         //Exportador para CSV (StandardCharsets.UTF_8 para ler os carácteres especiais)
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter("analisedegastos.csv", StandardCharsets.UTF_8))) {
-        writer.write("Nome, Valor, Tipo, Classificação\n");
-    
-        for (Gasto gasto : listaDeGastos) {
-            writer.write(gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Ativo" : "Passivo") + ", " + gasto.getClassificacao() + "\n");
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("analisedegastos.csv"), StandardCharsets.UTF_8))) {
+            writer.write("Nome, Valor, Tipo, Classificação\n");
+        
+            for (Gasto gasto : listaDeGastos) {
+                writer.write(gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Ativo" : "Passivo") + ", " + gasto.getClassificacao() + "\n");
+            }
+            String valorFormatado = String.format("Total de Ativos: %.2f, Total de Passivos: %.2f, Patrimônio Líquido: %.2f", analise.getTotalAtivo(), analise.getTotalPassivo(), analise.getPatLiq());
+            writer.write(valorFormatado);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-         String valorFormatado = String.format("Total de Ativos: %.2f, Total de Passivos: %.2f, Patrimônio Líquido: %.2f", analise.getTotalAtivo(), analise.getTotalPassivo(), analise.getPatLiq());
-         writer.write(valorFormatado);
-    } catch (IOException e) {
-        e.printStackTrace();
     }
- }
 }
 
