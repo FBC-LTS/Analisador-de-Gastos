@@ -97,9 +97,10 @@ public class Analise {
             for (Gasto gasto : listaDeGastos) {
                 writer.write(gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Ativo" : "Passivo") + ", " + gasto.getClassificacao() + "\n");
             }
-            
-            String valorFormatado = String.format("Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s", formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatLiq()));
+            writer.write("Fim dos gastos!\n");
+            String valorFormatado = String.format("\n Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s \n", formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatLiq()));
         writer.write(valorFormatado);
+            System.out.println("Analise exportada!");
         } catch (IOException e) {
              e.printStackTrace();
         }
@@ -153,10 +154,15 @@ public class Analise {
             // Supondo que os cabeçalhos sejam: "Nome, Valor, Tipo, Classificação"
             // Você pode processar essa linha, mas pode não ser necessária
         }
+        
 
         Analise analise = new Analise(0.0, "Análise Importada", new ArrayList<>());
 
         while ((line = reader.readLine()) != null) {
+            if (line.equals("Fim dos gastos!")) {
+                break; // Parar a importação
+            }
+
             String[] dados = line.split(",");
             String nome = dados[0];
             double valor = Double.parseDouble(dados[1]);
@@ -174,6 +180,7 @@ public class Analise {
 
             // Adicione o gasto à análise
             analise.registrarGasto(nome, valor, tipo, classificacaoObj.codCategoria, classificacaoObj.subCategoria);
+            
         }
         return analise;
         // Resto do código

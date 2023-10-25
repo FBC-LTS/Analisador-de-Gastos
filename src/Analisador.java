@@ -46,7 +46,7 @@ public class Analisador {
         }
         System.out.println("Mensagem de teste 2!!!!");
         analise.exportador();
-
+        System.out.println(analise.getListaDeGastosString());
     }
 }
 
