@@ -1,5 +1,7 @@
+package Analisador;
 import java.util.List;
-import tiposPack.Gasto;
+
+import Analisador.tiposPack.Gasto;
 
 
 public class Analise {
@@ -16,7 +18,7 @@ public class Analise {
         this.faturamento = faturamento;
         this.listaDeGastos = listaDeGastos;
     }
-    void registrarGasto(String nome, double valor, int tipo, int codCategoria, int subCategoria) {
+    public void registrarGasto(String nome, double valor, int tipo, int codCategoria, int subCategoria) {
         this.currentId = this.currentId+1;
         Gasto novoGasto = new Gasto(nome, this.currentId, valor, tipo, codCategoria, subCategoria);
         listaDeGastos.add(novoGasto);
@@ -24,7 +26,7 @@ public class Analise {
         somarPassivo(novoGasto);
         System.out.println("Gasto '" + novoGasto.getNome() + "' adicionado!");
     }
-    void excluirGasto(int id) { // método para encontrar e remover uma instância da gasto dentro da listaDeGastos utilizando a variável "id" da classe Gasto
+    public void excluirGasto(int id) { // método para encontrar e remover uma instância da gasto dentro da listaDeGastos utilizando a variável "id" da classe Gasto
         Gasto gastoToRemove = null;
         for (Gasto gasto : listaDeGastos) {
             if (gasto.getId()==(id)) {

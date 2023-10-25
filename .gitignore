@@ -1,4 +1,5 @@
 
-bin/Gasto.class
-bin/Classificacao.class
-bin/Analise.class
+/bin/
+analisedegastos.csv
+*.class
+bin/tiposPack/Classificacao.class
