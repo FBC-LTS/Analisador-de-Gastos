@@ -81,14 +81,6 @@ public class Analise {
         patLiq = totalAtivo - totalPassivo;
     }
     
-    public String getListaDeGastosString() {
-        StringBuilder sb = new StringBuilder();
-        for (Gasto gasto : listaDeGastos) {
-            sb.append(gasto.leitor()).append("\n");
-        }
-        return sb.toString();
-    }
-
     public void exportador(){
         
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("analisedegastos.csv"), StandardCharsets.UTF_8))) {
@@ -116,6 +108,7 @@ public class Analise {
             return -1; // Por exemplo, retornar -1 para um caso inválido
         }
     }
+    
     public Classificacao numerarClassificacao(String nomeCategoria, String nomeSubCategoria) {
         Classificacao classificacao = new Classificacao(0, 0);
     
@@ -146,7 +139,7 @@ public class Analise {
         return classificacao;
     }
 
-    public Analise importarDados(String nomeDoArquivo) {
+    public Analise importarDados(String nomeDoArquivo, Analise analise) {
     try (BufferedReader reader = new BufferedReader(new FileReader(nomeDoArquivo))) {
         String line;
         // Ler a primeira linha com os cabeçalhos, se houver
@@ -154,9 +147,8 @@ public class Analise {
             // Supondo que os cabeçalhos sejam: "Nome, Valor, Tipo, Classificação"
             // Você pode processar essa linha, mas pode não ser necessária
         }
-        
-
-        Analise analise = new Analise(0.0, "Análise Importada", new ArrayList<>());
+    
+        //Analise analise2 = new Analise(0.0, "Análise Importada", new ArrayList<>());
 
         while ((line = reader.readLine()) != null) {
             if (line.equals("Fim dos gastos!")) {
@@ -180,6 +172,7 @@ public class Analise {
 
             // Adicione o gasto à análise
             analise.registrarGasto(nome, valor, tipo, classificacaoObj.codCategoria, classificacaoObj.subCategoria);
+            System.out.println("Gasto adicionado à análise: " + nome);
             
         }
         return analise;
@@ -213,5 +206,12 @@ public class Analise {
     }
     public double getPatLiq() {
         return patLiq;
+    }
+    public String getListaDeGastosString() {
+        StringBuilder sb = new StringBuilder();
+        for (Gasto gasto : listaDeGastos) {
+            sb.append(gasto.leitor()).append("\n");
+        }
+        return sb.toString();
     }
 }

@@ -6,6 +6,13 @@ Gasto 5, 150.0, Ativo, Perda
 Gasto 6, 240.0, Ativo, Investimento
 Gasto 7, 355.5, Passivo, Custo, industrial
 Gasto 8, 1000.0, Ativo, Custo, industrial
+Gasto 9, 100.0, Passivo, Custo
+Gasto 10, 200.0, Passivo, Investimento
+Gasto 11, 300.0, Passivo, Despesa
+Gasto 12, 150.0, Passivo, Perda
+Gasto 13, 240.0, Passivo, Investimento
+Gasto 14, 355.5, Passivo, Custo
+Gasto 15, 1000.0, Passivo, Custo
 Fim dos gastos!
 
- Total de Ativos: 1490.00, Total de Passivos: 855.50, Patrimônio Líquido: 634.50 
+ Total de Ativos: 1490.00, Total de Passivos: 3201.00, Patrimônio Líquido: 634.50 

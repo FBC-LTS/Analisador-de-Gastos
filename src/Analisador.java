@@ -35,7 +35,7 @@ public class Analisador {
         System.out.println("Mensagem de teste 1!!!!");
 
         String nomeDoArquivo = "D:\\hahahasouprogramador\\Java\\github\\Gestor-Custos\\analisedegastos - Copia.csv"; // Substitua pelo caminho do seu arquivo CSV
-        Analise analiseImportada = analise.importarDados(nomeDoArquivo);
+        Analise analiseImportada = analise.importarDados(nomeDoArquivo, analise);
     
         if (analiseImportada != null) {
             // Use a instância de Analise importada
@@ -47,6 +47,11 @@ public class Analisador {
         System.out.println("Mensagem de teste 2!!!!");
         analise.exportador();
         System.out.println(analise.getListaDeGastosString());
+        analise.calcularPatLiq();
+        System.out.println("Total Ativo: " + analise.getTotalAtivo());
+        System.out.println("Total Passivo: " + analise.getTotalPassivo());
+        System.out.println("Patrimônio Líquido: " + analise.getPatLiq());
+
     }
 }
 
