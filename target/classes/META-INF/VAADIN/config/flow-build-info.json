@@ -1,0 +1,16 @@
+{
+  "productionMode": false,
+  "eagerServerLoad": false,
+  "npmFolder": "D:\\hahahasouprogramador\\Java\\github\\Gestor-Custos",
+  "node.version": "v20.8.0",
+  "node.download.root": "https://nodejs.org/dist/",
+  "frontendFolder": "D:\\hahahasouprogramador\\Java\\github\\Gestor-Custos\\frontend",
+  "connect.javaSourceFolder": "D:\\hahahasouprogramador\\Java\\github\\Gestor-Custos\\src\\main\\java",
+  "javaResourceFolder": "D:\\hahahasouprogramador\\Java\\github\\Gestor-Custos\\src\\main\\resources",
+  "connect.applicationProperties": "D:\\hahahasouprogramador\\Java\\github\\Gestor-Custos\\src\\main\\resources\\application.properties",
+  "connect.openApiFile": "D:\\hahahasouprogramador\\Java\\github\\Gestor-Custos\\target\\generated-resources\\openapi.json",
+  "project.frontend.generated": "D:\\hahahasouprogramador\\Java\\github\\Gestor-Custos\\frontend\\generated",
+  "pnpm.enable": false,
+  "require.home.node": false,
+  "build.folder": "target"
+}

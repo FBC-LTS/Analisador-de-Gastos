@@ -24,11 +24,11 @@ public class Analisador {
         // Exemplo de exclusão de gasto
         analise.excluirGasto(1); // Supondo que 1 seja o ID do gasto a ser excluído
         //Calculando o Patrimônio Líquido após os registros e exclusões
-        analise.calcularPatLiq();
+        analise.getPatrimonioLiquido();
         // Exibir o total ativo, total passivo, e o patrimônio líquido
         System.out.println("Total Ativo: " + analise.getTotalAtivo());
         System.out.println("Total Passivo: " + analise.getTotalPassivo());
-        System.out.println("Patrimônio Líquido: " + analise.getPatLiq());
+        System.out.println("Patrimônio Líquido: " + analise.getPatrimonioLiquido());
         System.out.println(analise.getListaDeGastosString());
         analise.exportador();
         System.out.println("Mensagem de teste 1!!!!");
@@ -46,10 +46,10 @@ public class Analisador {
         System.out.println("Mensagem de teste 2!!!!");
         analise.exportador();
         System.out.println(analise.getListaDeGastosString());
-        analise.calcularPatLiq();
+        analise.getPatrimonioLiquido();
         System.out.println("Total Ativo: " + analise.getTotalAtivo());
         System.out.println("Total Passivo: " + analise.getTotalPassivo());
-        System.out.println("Patrimônio Líquido: " + analise.getPatLiq());
+        System.out.println("Patrimônio Líquido: " + analise.getPatrimonioLiquido());
 
     }
 }

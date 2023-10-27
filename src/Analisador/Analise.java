@@ -90,7 +90,7 @@ public class Analise {
     public void exportador() {
 
         try (BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream("analisedegastos.csv"), StandardCharsets.UTF_8))) {
+                new OutputStreamWriter(new FileOutputStream(this.titulo + ".csv"), StandardCharsets.UTF_8))) {
             writer.write("Nome, Valor, Tipo, Classificação\n");
 
             for (Gasto gasto : listaDeGastos) {
@@ -100,7 +100,7 @@ public class Analise {
             writer.write("Fim dos gastos!\n");
             String valorFormatado = String.format(
                     "\n Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s \n",
-                    formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatLiq()));
+                    formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatrimonioLiquido()));
             writer.write(valorFormatado);
             System.out.println("Analise exportada!");
         } catch (IOException e) {
@@ -173,7 +173,7 @@ public class Analise {
                 String classificacao = dados[3]; // Classificação completa
 
                 // Separe a classificação em categoria e subcategoria
-                String[] partesClassificacao = classificacao.split(",");
+                String[] partesClassificacao = classificacao.split(" ");
                 String nomeCategoria = partesClassificacao[0].trim(); // Categoria
                 String nomeSubCategoria = partesClassificacao.length > 1 ? partesClassificacao[1].trim() : null; // Subcategoria,
                                                                                                                  // se
