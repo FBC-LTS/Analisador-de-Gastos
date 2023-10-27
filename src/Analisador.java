@@ -6,11 +6,10 @@ import Analisador.tiposPack.Gasto;
 
 public class Analisador {
     public static void main(String[] args) {
-        // Inicialização da lista de gastos
-        List<Gasto> listaDeGastos = new ArrayList<>();
+        
 
         // Criação de uma instância de Analise
-        Analise analise = new Analise(1000.0, "Primeira Análise", listaDeGastos ); // Supondo que o construtor de Analise requer uma lista de gastos
+        Analise analise = new Analise(1000.0, "Primeira Análise"); // Supondo que o construtor de Analise requer uma lista de gastos
 
         // Exemplo de registro de gastos
         analise.registrarGasto("Gasto 1", 100.0, 0, 1, 1);
