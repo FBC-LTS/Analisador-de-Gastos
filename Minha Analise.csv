@@ -1,0 +1,11 @@
+Nome, Valor, Tipo, Classificação
+Gasto 2, 100.0, Passivo, Custo comercial
+Gasto 3, 200.0, Ativo, Investimento
+Gasto 4, 300.0, Ativo, Despesa
+Gasto 5, 150.0, Passivo, Perda
+Gasto 6, 240.0, Passivo, Investimento
+Gasto 7, 355.5, Ativo, Custo industrial
+Gasto 8, 1000.0, Passivo, Custo industrial
+Fim dos gastos!
+
+ Faturamento: 1000.00, Total de Ativos: 1490.00, Total de Passivos: 855.50, Patrimônio Líquido: 634.50 

@@ -5,7 +5,7 @@ public class Analisador {
         
 
         // Criação de uma instância de Analise
-        Analise analise = new Analise(1000.0, "Primeira Análise"); // Supondo que o construtor de Analise requer uma lista de gastos
+        Analise analise = new Analise(1000.0, "Minha Analise"); // Supondo que o construtor de Analise requer uma lista de gastos
 
         // Exemplo de registro de gastos
         analise.registrarGasto("Gasto 1", 100.0, 0, 1, 1);
@@ -27,7 +27,6 @@ public class Analisador {
         System.out.println("Patrimônio Líquido: " + analise.getPatrimonioLiquido());
         System.out.println(analise.getListaDeGastosString());
         analise.exportador();
-        System.out.println("Mensagem de teste 1!!!!");
 
         String nomeDoArquivo = "D:\\hahahasouprogramador\\Java\\github\\Gestor-Custos\\analisedegastos - Copia.csv"; // Substitua pelo caminho do seu arquivo CSV
         Analise analiseImportada = analise.importarDados(nomeDoArquivo, analise);
@@ -39,7 +38,6 @@ public class Analisador {
         } else {
             System.out.println("Falha na importação do arquivo.");
         }
-        System.out.println("Mensagem de teste 2!!!!");
         analise.exportador();
         System.out.println(analise.getListaDeGastosString());
         analise.getPatrimonioLiquido();

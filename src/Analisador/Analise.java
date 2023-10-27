@@ -1,6 +1,7 @@
 package Analisador;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -88,21 +89,43 @@ public class Analise {
     }
 
     public void exportador() {
+        String baseNomeArquivo = this.titulo;
+        String nomeArquivo = baseNomeArquivo + ".csv";
+        int contador = 2;
+
+        while (true) {
+            File arquivo = new File(nomeArquivo);
+
+            if (!arquivo.exists()) {
+                try (BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(arquivo), StandardCharsets.UTF_8))) {
+                    // Realize a escrita no arquivo aqui
+                    break;
+                } catch (IOException e) {
+                    // Trate erros de E/S, se necessário
+                    e.printStackTrace();
+                }
+            } else {
+                nomeArquivo = baseNomeArquivo + " " + contador + ".csv";
+                contador++;
+            }
+        }
 
         try (BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(this.titulo + ".csv"), StandardCharsets.UTF_8))) {
+                new OutputStreamWriter(new FileOutputStream(nomeArquivo), StandardCharsets.UTF_8))) {
             writer.write("Nome, Valor, Tipo, Classificação\n");
 
             for (Gasto gasto : listaDeGastos) {
                 writer.write(gasto.getNome() + ", " + gasto.getValor() + ", "
-                        + (gasto.getTipo() == 0 ? "Ativo" : "Passivo") + ", " + gasto.getClassificacao() + "\n");
+                        + (gasto.getTipo() == 0 ? "Passivo" : "Ativo") + ", " + gasto.getClassificacao() + "\n");
             }
             writer.write("Fim dos gastos!\n");
             String valorFormatado = String.format(
-                    "\n Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s \n",
-                    formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatrimonioLiquido()));
+            "\n Faturamento: %s, Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s \n",
+                    formatarValor(getFaturamento()), formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatrimonioLiquido())
+            );
             writer.write(valorFormatado);
-            System.out.println("Analise exportada!");
+            System.out.println("Analise exportada para: " + nomeArquivo);
         } catch (IOException e) {
             e.printStackTrace();
         }
