@@ -1,8 +1,10 @@
 package com.example.application.Analisador;
 import java.util.List;
 import com.example.application.Analisador.tiposPack.Gasto;
+import com.example.application.Analisador.tiposPack.Classificacao;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -15,8 +17,6 @@ import java.util.Locale;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
-import Analisador.tiposPack.Gasto;
-import Analisador.tiposPack.Classificacao;
 
 public class Analise {
     private List<Gasto> listaDeGastos = new ArrayList<>();
@@ -90,21 +90,43 @@ public class Analise {
     }
 
     public void exportador() {
+        String baseNomeArquivo = this.titulo;
+        String nomeArquivo = baseNomeArquivo + ".csv";
+        int contador = 2;
+
+        while (true) {
+            File arquivo = new File(nomeArquivo);
+
+            if (!arquivo.exists()) {
+                try (BufferedWriter writer = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(arquivo), StandardCharsets.UTF_8))) {
+                    // Realize a escrita no arquivo aqui
+                    break;
+                } catch (IOException e) {
+                    // Trate erros de E/S, se necessário
+                    e.printStackTrace();
+                }
+            } else {
+                nomeArquivo = baseNomeArquivo + " " + contador + ".csv";
+                contador++;
+            }
+        }
 
         try (BufferedWriter writer = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream("analisedegastos.csv"), StandardCharsets.UTF_8))) {
+                new OutputStreamWriter(new FileOutputStream(nomeArquivo), StandardCharsets.UTF_8))) {
             writer.write("Nome, Valor, Tipo, Classificação\n");
 
             for (Gasto gasto : listaDeGastos) {
                 writer.write(gasto.getNome() + ", " + gasto.getValor() + ", "
-                        + (gasto.getTipo() == 0 ? "Ativo" : "Passivo") + ", " + gasto.getClassificacao() + "\n");
+                        + (gasto.getTipo() == 0 ? "Passivo" : "Ativo") + ", " + gasto.getClassificacao() + "\n");
             }
             writer.write("Fim dos gastos!\n");
             String valorFormatado = String.format(
-                    "\n Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s \n",
-                    formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatLiq()));
+            "\n Faturamento: %s, Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s \n",
+                    formatarValor(getFaturamento()), formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatrimonioLiquido())
+            );
             writer.write(valorFormatado);
-            System.out.println("Analise exportada!");
+            System.out.println("Analise exportada para: " + nomeArquivo);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -126,23 +148,23 @@ public class Analise {
 
         switch (nomeCategoria) {
             case "Desembolso":
-                classificacao.codCategoria = 0;
+                classificacao.getCodCategoria = 0;
                 break;
             case "Perda":
-                classificacao.codCategoria = 1;
+                classificacao.getCodCategoria = 1;
                 break;
             case "Despesa":
-                classificacao.codCategoria = 2;
+                classificacao.getCodCategoria = 2;
                 break;
             case "Investimento":
-                classificacao.codCategoria = 3;
+                classificacao.getCodCategoria = 3;
                 break;
             case "Custo":
-                classificacao.codCategoria = 4;
+                classificacao.getCodCategoria = 4;
                 if ("Comercial".equals(nomeSubCategoria)) {
-                    classificacao.subCategoria = 1;
+                    classificacao.getSubCategoria = 1;
                 } else if ("Industrial".equals(nomeSubCategoria)) {
-                    classificacao.subCategoria = 2;
+                    classificacao.getSubCategoria = 2;
                 }
                 break;
             // Trate outros casos ou erros, se necessário
@@ -170,12 +192,12 @@ public class Analise {
                 String[] dados = line.split(",");
                 String nome = dados[0];
                 double valor = Double.parseDouble(dados[1]);
-                String tipoString = "Ativo"; // ou "Passivo"
+                String tipoString = dados[2].trim();
                 int tipo = mapearTipo(tipoString);
                 String classificacao = dados[3]; // Classificação completa
 
                 // Separe a classificação em categoria e subcategoria
-                String[] partesClassificacao = classificacao.split(",");
+                String[] partesClassificacao = classificacao.split(" ");
                 String nomeCategoria = partesClassificacao[0].trim(); // Categoria
                 String nomeSubCategoria = partesClassificacao.length > 1 ? partesClassificacao[1].trim() : null; // Subcategoria,
                                                                                                                  // se
@@ -186,7 +208,7 @@ public class Analise {
                 Classificacao classificacaoObj = numerarClassificacao(nomeCategoria, nomeSubCategoria);
 
                 // Adicione o gasto à análise
-                analise.registrarGasto(nome, valor, tipo, classificacaoObj.codCategoria, classificacaoObj.subCategoria);
+                analise.registrarGasto(nome, valor, tipo, classificacaoObj.getCodCategoria(), classificacaoObj.getSubCategoria);
                 System.out.println("Gasto adicionado à análise: " + nome);
 
             }
