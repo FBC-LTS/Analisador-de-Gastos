@@ -15,7 +15,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @NpmPackage(value = "@fontsource/inter", version = "4.5.0")
-@Theme(value = "my-app")
+@Theme(value = "my-app")  
+
 public class Application implements AppShellConfigurator {
 
     public static void main(String[] args) {

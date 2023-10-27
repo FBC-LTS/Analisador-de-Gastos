@@ -1,7 +1,7 @@
-package Analisador;
+package com.example.application.Analisador;
 import java.util.List;
+import com.example.application.Analisador.tiposPack.Gasto;
 
-import Analisador.tiposPack.Gasto;
 
 
 public class Analise {
@@ -13,10 +13,9 @@ public class Analise {
     public double patLiq;
     private int currentId;
     
-    public Analise(double faturamento, String titulo, List<Gasto> listaDeGastos) {
+    public Analise(double faturamento, String titulo) {
         this.titulo = titulo;
         this.faturamento = faturamento;
-        this.listaDeGastos = listaDeGastos;
     }
     public void registrarGasto(String nome, double valor, int tipo, int codCategoria, int subCategoria) {
         this.currentId = this.currentId+1;
@@ -42,31 +41,32 @@ public class Analise {
         }
     }
  
-    void somarAtivo(Gasto novoGasto) {
+    private void somarAtivo(Gasto novoGasto) {
         if (novoGasto.getTipo() == 0) { // Verifica se o novo gasto é ativo
             totalAtivo += novoGasto.valor; // Soma o valor do novo gasto ao total ativo
         } // Se for um passivo, retira do total de ativo
 
     }
-    void subtrairAtivo(Gasto gastoToRemove) {
+    private void subtrairAtivo(Gasto gastoToRemove) {
         if (gastoToRemove.getTipo() == 0) { // Verifica se o novo gasto é ativo
             totalAtivo -= gastoToRemove.valor; // Subtrai o valor do gasto que está sendo removido do total ativo
         } 
     }   
 
-    void somarPassivo(Gasto novoGasto) {
+    private void somarPassivo(Gasto novoGasto) {
         if (novoGasto.getTipo() == 1) {
             totalPassivo += novoGasto.valor;
         }
     }
-    void subtrairPassivo(Gasto gastoToRemove) {
+    private void subtrairPassivo(Gasto gastoToRemove) {
         if (gastoToRemove.getTipo() == 1) {
             totalPassivo -= gastoToRemove.valor; 
         }
     }   
 
-    public void calcularPatLiq() {
+    public double getPatrimonioLiquido() {
         patLiq = totalAtivo - totalPassivo;
+        return patLiq;
     }
     
     public String getListaDeGastosString() {
@@ -83,16 +83,11 @@ public class Analise {
     public double getFaturamento() {
         return this.faturamento;
     }
-    public List<Gasto> getListaDeGastos() {
-        return listaDeGastos;
-    }
+    
     public double getTotalAtivo() {
         return totalAtivo;
     }
     public double getTotalPassivo() {
         return totalPassivo;
-    }
-    public double getPatLiq() {
-        return patLiq;
     }
 }

@@ -1,4 +1,4 @@
-package Analisador.tiposPack;
+package com.example.application.Analisador.tiposPack;
 
 public class Classificacao {
     public String nome;
