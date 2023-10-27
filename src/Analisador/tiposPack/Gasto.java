@@ -17,7 +17,7 @@ public class Gasto {
     }
 
     public String leitor() {
-        return "Nome: " + this.nome + ", Valor: " + this.valor + ", Tipo: " + (this.tipo == 0 ? "Ativo" : "Passivo")
+        return "Nome: " + this.nome + ", Valor: " + this.valor + ", Tipo: " + (this.tipo == 0 ? "Passivo" : "Ativo")
                 + ", Classificação: " + this.classificacao.nome;
     }
 

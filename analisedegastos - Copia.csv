@@ -1,8 +1,8 @@
 Nome, Valor, Tipo, Classificação
-Gasto 9, 100.0, Ativo, Custo, comercial
-Gasto 10, 200.0, Passivo, Investimento
-Gasto 11, 300.0, Passivo, Despesa
-Gasto 12, 150.0, Ativo, Perda
+Gasto 9, 100.0, Passivo, Custo, comercial
+Gasto 10, 200.0, Ativo, Investimento
+Gasto 11, 300.0, Ativo, Despesa
+Gasto 12, 150.0, Passivo, Perda
 Gasto 13, 240.0, Ativo, Investimento
 Gasto 14, 355.5, Passivo, Custo, industrial
 Gasto 15, 1000.0, Ativo, Custo, industrial

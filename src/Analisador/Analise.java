@@ -124,23 +124,23 @@ public class Analise {
 
         switch (nomeCategoria) {
             case "Desembolso":
-                classificacao.codCategoria = 0;
+                classificacao.getCodCategoria = 0;
                 break;
             case "Perda":
-                classificacao.codCategoria = 1;
+                classificacao.getCodCategoria = 1;
                 break;
             case "Despesa":
-                classificacao.codCategoria = 2;
+                classificacao.getCodCategoria = 2;
                 break;
             case "Investimento":
-                classificacao.codCategoria = 3;
+                classificacao.getCodCategoria = 3;
                 break;
             case "Custo":
-                classificacao.codCategoria = 4;
+                classificacao.getCodCategoria = 4;
                 if ("Comercial".equals(nomeSubCategoria)) {
-                    classificacao.subCategoria = 1;
+                    classificacao.getSubCategoria = 1;
                 } else if ("Industrial".equals(nomeSubCategoria)) {
-                    classificacao.subCategoria = 2;
+                    classificacao.getSubCategoria = 2;
                 }
                 break;
             // Trate outros casos ou erros, se necessário
@@ -168,7 +168,7 @@ public class Analise {
                 String[] dados = line.split(",");
                 String nome = dados[0];
                 double valor = Double.parseDouble(dados[1]);
-                String tipoString = "Ativo"; // ou "Passivo"
+                String tipoString = dados[2].trim();
                 int tipo = mapearTipo(tipoString);
                 String classificacao = dados[3]; // Classificação completa
 
@@ -184,7 +184,7 @@ public class Analise {
                 Classificacao classificacaoObj = numerarClassificacao(nomeCategoria, nomeSubCategoria);
 
                 // Adicione o gasto à análise
-                analise.registrarGasto(nome, valor, tipo, classificacaoObj.codCategoria, classificacaoObj.subCategoria);
+                analise.registrarGasto(nome, valor, tipo, classificacaoObj.getCodCategoria(), classificacaoObj.getSubCategoria);
                 System.out.println("Gasto adicionado à análise: " + nome);
 
             }

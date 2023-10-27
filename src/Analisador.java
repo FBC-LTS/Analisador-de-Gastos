@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-
 import Analisador.Analise;
-import Analisador.tiposPack.Gasto;
 
 public class Analisador {
     public static void main(String[] args) {
