@@ -1,4 +1,4 @@
-package com.example.application.Analisador.tiposPack;
+package Analisador.tiposPack;
 
 public class Classificacao {
     public String nome;
@@ -12,7 +12,7 @@ public class Classificacao {
         nomearClassifcacao();
     }
 
-    void nomearClassifcacao() {
+    public void nomearClassifcacao() {
         if(this.codCategoria == 0){
             this.nome = "Desembolso";
         }
@@ -30,7 +30,7 @@ public class Classificacao {
             subClassifcar();
         }
     }
-
+    
     private void subClassifcar(){
         if(this.subCategoria == 1){
             this.nome = this.nome + " comercial";
@@ -41,7 +41,7 @@ public class Classificacao {
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
 }
