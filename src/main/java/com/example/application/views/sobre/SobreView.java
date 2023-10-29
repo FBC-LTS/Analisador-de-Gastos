@@ -89,6 +89,33 @@ public class SobreView extends VerticalLayout {
             " Líder e Documentação"
             );
         alunos.add(fabricio);
+
+        VerticalLayout lucimar = new VerticalLayout();
+        lucimar = campoAutor(lucimar,
+            " Lucimar Barros de Oliveira",
+            " 202109086758",
+            " Análise e desenvolvimento de sistemas",
+            " Backend / Frontend"
+            );
+        alunos.add(lucimar);
+
+        VerticalLayout Nicolas = new VerticalLayout();
+        Nicolas = campoAutor(Nicolas,
+            " Nícolas Moniz Rodrigues.",
+            "  201902180259",
+            " Ciências da computação",
+            " Backend"
+            );
+        alunos.add(Nicolas);
+
+        VerticalLayout Bruno = new VerticalLayout();
+        Bruno = campoAutor(Bruno,
+            " Bruno Santana de Sousa.",
+            " 202204064031",
+            " Análise e desenvolvimento de sistemas",
+            " Front-end e Design"
+            );
+        alunos.add(Bruno);
         container.add(alunos);
         return container;
     }
