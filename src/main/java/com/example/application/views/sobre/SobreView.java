@@ -78,14 +78,56 @@ public class SobreView extends VerticalLayout {
         H2 tituloAutores = new H2("Autores:");
         container.add(tituloAutores);
         
+        VerticalLayout alunos = new VerticalLayout();
+        alunos.addClassName("container");
+        
+        VerticalLayout fabricio = new VerticalLayout();
+        fabricio = campoAutor(fabricio,
+            " Fabrício Lustosa de Oliveira Alencar Cunha.",
+            " 202109059831",
+            " Análise e desenvolvimento de sistemas",
+            " Líder e Documentação"
+            );
+        alunos.add(fabricio);
+        container.add();
+        return container;
+    }
+
+    private VerticalLayout campoAutor(VerticalLayout container, String nomeAutor, String matriculaAutor, String cursoAutor, String responsabilidadeAutor){
+
+        
         Span nome = new Span("Nome:");
         nome.addClassName("negrito");
+       
+        Span matricula = new Span("Matrícula:");
+        matricula.addClassName("negrito");
 
-        Text nomeBruno = new Text(" Bruno Santana de Sousa.");
+        Span curso = new Span("Curso:");
+        curso.addClassName("negrito");
+
+        Span responsabilidade = new Span("Responsabilidade:");
+        responsabilidade.addClassName("negrito");
+
+      
+        Text nomeText = new Text(nomeAutor);
+        Text matriculaText = new Text(matriculaAutor);
+        Text cursoText = new Text(cursoAutor);
+        Text responsabilidadeText = new Text(responsabilidadeAutor);
+
         HorizontalLayout containerNome = new HorizontalLayout();
-
-        containerNome.add(nome, nomeBruno);
-        container.add(containerNome);
+        HorizontalLayout containerMatricula = new HorizontalLayout();
+        HorizontalLayout containerCurso = new HorizontalLayout();
+        HorizontalLayout containerResponsabilidade = new HorizontalLayout();
+        
+        containerNome.add(nome, nomeText);
+        containerMatricula.add(matricula, matriculaText);
+        containerCurso.add(curso, cursoText);
+        containerResponsabilidade.add(responsabilidade, responsabilidadeText);
+        container.add(containerNome,
+            containerMatricula,
+            containerCurso,
+            containerResponsabilidade
+        );
         
         return container;
     }
