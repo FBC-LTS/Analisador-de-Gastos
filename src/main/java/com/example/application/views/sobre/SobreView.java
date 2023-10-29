@@ -89,7 +89,7 @@ public class SobreView extends VerticalLayout {
             " Líder e Documentação"
             );
         alunos.add(fabricio);
-        container.add();
+        container.add(alunos);
         return container;
     }
 
