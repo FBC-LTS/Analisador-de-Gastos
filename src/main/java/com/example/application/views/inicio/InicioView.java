@@ -34,23 +34,25 @@ public class InicioView extends VerticalLayout {
         container.addClassName("container");
         container.getElement().getStyle().set("width", "50%");
         container.getElement().getStyle().set("margin-left", "25%");
-        
-        
+
+        Image logo = new Image("./images/Logo.png", "Analisador de Gastos");
+        logo.setWidth("calc(99.9% - 30rem)");
 
         FormLayout formLayout = new FormLayout();
         formLayout = criaForm(formLayout);
         
-        container.add(formLayout);
+        container.add(logo, formLayout);
           
         add(container);
     }
 
     private FormLayout criaForm(FormLayout formLayout){
+
         TextField titulo = new TextField("Titulo:");
         titulo.addClassName("input-form");
         titulo.setClearButtonVisible(true);
         titulo.setTooltipText("Insira o titulo do projeto.");
-
+    
         TextField faturamento = new TextField("Faturamento:");
         faturamento.addClassName("input-form");
         faturamento.setClearButtonVisible(true);
