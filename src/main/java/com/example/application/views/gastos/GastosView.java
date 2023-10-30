@@ -3,17 +3,15 @@ package com.example.application.views.gastos;
 import com.example.application.Analisador.Analise;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.formlayout.FormLayout;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
-import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 
 @PageTitle("Gastos")
 @Route(value = "Gastos", layout = MainLayout.class)
@@ -44,8 +42,17 @@ public class GastosView extends VerticalLayout {
 
     private FormLayout formulario(FormLayout formLayout){
 
+        TextField gasto = new TextField("Nome:");
+        gasto.addClassName("input-form");
+        gasto.setClearButtonVisible(true);
+        gasto.setTooltipText("Insira o nome do gasto.");
+        
+        ComboBox<String> tipo = new ComboBox<>("Tipo");
+        tipo.setItems("ativo", "passivo");
+
+        formLayout.add(gasto,tipo);
         return formLayout;
     }
-
+    
 
 }
