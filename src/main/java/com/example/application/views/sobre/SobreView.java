@@ -28,7 +28,7 @@ public class SobreView extends VerticalLayout {
         // criando uma div principal
         VerticalLayout container = new VerticalLayout();
             // adicionando a classe container no elemento para estilisar
-        container.addClassName("container");
+        container.addClassName("container-sobre");
             // criando e adicionando o titulo
         H1 titulo = new H1("Sobre");
         titulo.addClassName("centraliza-titulo");
@@ -80,7 +80,7 @@ public class SobreView extends VerticalLayout {
         
         VerticalLayout alunos = new VerticalLayout();
     
-        alunos.addClassName("container");
+        alunos.addClassName("container-sobre");
         alunos.setId("container-alunos");
         alunos.getElement().getStyle().set("width", "80%");
 
@@ -120,8 +120,9 @@ public class SobreView extends VerticalLayout {
             );
         alunos.add(bruno);
         bruno.addClassName("autores");
+        Paragraph honra = new Paragraph("Gostaríamos de fazer uma menção honrosa ao nosso colega Gustavo Emanoel de Oliveira Adornelas, que precisou sair do projeto, mas contribuiu muito para o design das telas.");
+        alunos.add(honra);
         container.add(alunos);
-        container.getElement().getThemeList().clear();
         return container;
     }
 
@@ -154,6 +155,7 @@ public class SobreView extends VerticalLayout {
         containerMatricula.add(matricula, matriculaText);
         containerCurso.add(curso, cursoText);
         containerResponsabilidade.add(responsabilidade, responsabilidadeText);
+        container.getElement().getThemeList().clear();
         container.add(containerNome,
             containerMatricula,
             containerCurso,
