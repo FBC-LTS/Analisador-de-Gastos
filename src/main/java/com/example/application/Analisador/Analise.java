@@ -133,18 +133,23 @@ public class Analise {
     }
     public byte[] exportador() {
         try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8))) {
+             OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8)) {
+    
     
             writer.write("Nome, Valor, Tipo, Classificação\n");
     
-            for (Gasto gasto : this.listaDeGastos) {
-                writer.write(gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Passivo" : "Ativo") + ", " + gasto.getClassificacao() + "\n");
+            for (Gasto gasto : listaDeGastos) {
+                String linha = gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Passivo" : "Ativo") + ", " + gasto.getClassificacao() + "\n";
+                System.out.println("Linha do CSV: " + linha); // Adicione esta linha para depurar
+                writer.write(linha);
             }
+    
             writer.write("Fim dos gastos!\n");
             String valorFormatado = String.format(
                 "\n Faturamento: %s, Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s \n",
                 formatarValor(getFaturamento()), formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatrimonioLiquido())
             );
+            System.out.println("Valores formatados: " + valorFormatado); // Adicione esta linha para depurar
             writer.write(valorFormatado);
     
             // Retorna os bytes do arquivo gerado
