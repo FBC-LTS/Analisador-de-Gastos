@@ -2,13 +2,12 @@ package com.example.application.Analisador.tiposPack;
 
 public class Classificacao {
     public String nome;
-    private int codCategoria; // 0 = desembolso ; 1 = perda ; 2 = despesa ; 3 = investimento ; 4 = custo ; 
+    private int codCategoria; // 0 = desembolso ; 1 = perda ; 2 = despesa ; 3 = investimento ; 4 = custo ; 5 = ativo  
     private int subCategoria; // 0 = none ; 1 = comercial ; 2 = industrial ;
-    public int getCodCategoria;
-    public int getSubCategoria;
+
     // Construtor com ambas
     public Classificacao(int codCategoria, int subCategoria){
-        this.codCategoria = codCategoria; // 0 = desembolso ; 1 = perda ; 2 = despesa ; 3 = investimento ; 4 = custo ; 
+        this.codCategoria = codCategoria; // 0 = desembolso ; 1 = perda ; 2 = despesa ; 3 = investimento ; 4 = custo ; 5 = ativo 
         this.subCategoria = subCategoria; // 0 = none ; 1 = comercial ; 2 = industrial ;
         nomearClassifcacao();
     }
@@ -29,6 +28,9 @@ public class Classificacao {
         else if(this.codCategoria == 4){
             this.nome = "Custo";
             subClassifcar();
+        }
+        else if(this.codCategoria == 5){
+            this.nome = "Ativo";
         }
     }
     

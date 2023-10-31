@@ -142,34 +142,33 @@ public class Analise {
         }
     }
 
-    public Classificacao numerarClassificacao(String nomeCategoria, String nomeSubCategoria) {
-        Classificacao classificacao = new Classificacao(0, 0);
-
+    public int numerarClassificacao(String nomeCategoria) {
+        int codCategoria = 0;
+        
         switch (nomeCategoria) {
             case "Desembolso":
-                classificacao.getCodCategoria = 0;
+                codCategoria = 0;
                 break;
             case "Perda":
-                classificacao.getCodCategoria = 1;
+                codCategoria = 1;
                 break;
-            case "Despesa":
-                classificacao.getCodCategoria = 2;
+                case "Despesa":
+                codCategoria = 2;
                 break;
-            case "Investimento":
-                classificacao.getCodCategoria = 3;
+                case "Investimento":
+                codCategoria = 3;
                 break;
             case "Custo":
-                classificacao.getCodCategoria = 4;
-                if ("Comercial".equals(nomeSubCategoria)) {
-                    classificacao.getSubCategoria = 1;
-                } else if ("Industrial".equals(nomeSubCategoria)) {
-                    classificacao.getSubCategoria = 2;
-                }
+                codCategoria = 4;
+                break;
+            case "Ativo":
+                codCategoria = 5;
                 break;
             // Trate outros casos ou erros, se necessário
         }
-
-        return classificacao;
+        
+        
+        return codCategoria;
     }
 
     public Analise importarDados(String nomeDoArquivo, Analise analise) {
@@ -204,10 +203,11 @@ public class Analise {
 
                 // Chame o método para converter os nomes das categorias em objetos
                 // Classificacao
-                Classificacao classificacaoObj = numerarClassificacao(nomeCategoria, nomeSubCategoria);
+                int codCategoria = numerarClassificacao(nomeCategoria);
+                int subCategoria = numerarSubClassificacao(nomeSubCategoria);
 
                 // Adicione o gasto à análise
-                analise.registrarGasto(nome, valor, tipo, classificacaoObj.getCodCategoria(), classificacaoObj.getSubCategoria);
+                analise.registrarGasto(nome, valor, tipo, codCategoria, subCategoria);
                 System.out.println("Gasto adicionado à análise: " + nome);
 
             }
@@ -217,6 +217,18 @@ public class Analise {
             e.printStackTrace();
             return null; // Trate os erros apropriadamente
         }
+    }
+
+    private int numerarSubClassificacao(String nomeSubCategoria) {
+        int subCategoria;
+        if ("Comercial".equals(nomeSubCategoria)) {
+            subCategoria = 1;
+        } else if ("Industrial".equals(nomeSubCategoria)) {
+            subCategoria = 2;
+        }else {
+            subCategoria = 0;
+        }
+        return subCategoria;
     }
 
     // Necessário para usar "." invés de "," na formatação

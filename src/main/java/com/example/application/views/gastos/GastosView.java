@@ -117,10 +117,20 @@ public class GastosView extends VerticalLayout {
         nomeGasto.setTooltipText("Insira o nome do gasto.");
         
         ComboBox<String> tipo = new ComboBox<>("Tipo");
-        tipo.setItems("ativo", "passivo");
-
+        tipo.setItems("Ativo", "Passivo");
+        
         ComboBox<String> classificacao = new ComboBox<>("Classificação");
         classificacao.setItems("Desembolso", "Perda", "Retornável", "Relacionado a produção?");
+        classificacao.setVisible(false);
+        
+        tipo.addValueChangeListener(event -> {
+            String selectedValue = event.getValue();
+            if ("Passivo".equals(selectedValue)) {
+                classificacao.setVisible(true); // Torna a ComboBox classificacao visível
+            } else {
+                classificacao.setVisible(false); // Torna a ComboBox classificacao invisível
+            }
+        });
 
         ComboBox<String> subClassificacao = new ComboBox<>("Sub-classificação:");
         subClassificacao.setItems("Indiretamente", "Diretamente comercial", "Diretamente industrial");
@@ -152,13 +162,14 @@ public class GastosView extends VerticalLayout {
             String valorPreco = preco.getValue();
 
             Boolean valida = validarGastos(valorNome, valorTipo, valorClassificacao, valorSubClassificacao, valorPreco);
+            System.out.println(valida);
             if (valida) {
                 nomeGasto.clear(); 
                 tipo.clear(); 
                 classificacao.clear(); 
                 subClassificacao.clear(); 
                 preco.clear();
-                this.totalGastos = this.totalGastos + 1;
+                
                 previwGastos();
             }
             System.out.println(this.analise.getListaDeGastosString());
@@ -189,16 +200,19 @@ public class GastosView extends VerticalLayout {
         }
 
         // atribuindo o valor de acordo com o selecionado, caso não selecionado os parametros serão invalidos
-        if (valorTipo.toLowerCase() == "ativo"){
+        if (valorTipo == "Ativo"){
             intTipo = 1;
-        }else if (valorTipo.toLowerCase() == "passivo"){
+            intClassificacao = 5;
+        }else if (valorTipo == "Passivo"){
             intTipo = 0;
         }else {
             valida = false;
         }
 
         // verifica casos nulos 
-        
+        if (valorTipo == "Passivo" && valorClassificacao == null){
+            valida = false;
+        }
         if (valorClassificacao == "Relacionado a produção?" && valorSubClassificacao == null){
             valida = false;
         }
@@ -220,8 +234,6 @@ public class GastosView extends VerticalLayout {
                 intClassificacao = 4;
                 intSubClassificacao = 2;
             }
-        }else{
-            valida = false;
         }
         
         doublePreco =  Double.parseDouble(valorPreco);
