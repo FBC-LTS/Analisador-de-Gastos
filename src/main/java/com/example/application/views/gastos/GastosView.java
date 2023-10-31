@@ -1,7 +1,9 @@
 package com.example.application.views.gastos;
 
 import com.example.application.Analisador.Analise;
+import com.example.application.Analisador.tiposPack.Gasto;
 import com.example.application.views.MainLayout;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -9,8 +11,12 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
+import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -22,6 +28,11 @@ import com.vaadin.flow.server.VaadinSession;
 @StyleSheet("./estilos/gastos.css")
 public class GastosView extends VerticalLayout {
     Analise analise = (Analise) VaadinSession.getCurrent().getAttribute("analiseAtual");
+    VerticalLayout containerResultado = new VerticalLayout();
+    VerticalLayout containerBotoes = new VerticalLayout();
+    Integer totalGastos = 0;
+    Div scrollableContainer = new Div();
+    
     
     public GastosView() {
         
@@ -30,24 +41,72 @@ public class GastosView extends VerticalLayout {
         if (this.analise == null){
             UI.getCurrent().navigate("");
         }else{
-            HorizontalLayout containerFormulario = new HorizontalLayout();
+            VerticalLayout containerFormulario = new VerticalLayout();
             containerFormulario.addClassName("container");
-            VerticalLayout containerResultado = new VerticalLayout();
-            containerResultado.addClassName("container");
-            HorizontalLayout containerBotoes = new HorizontalLayout();
-            containerBotoes.addClassName("container");
-
+            containerFormulario.addClassName("registro-gasto");
+            
+            
             FormLayout formLayout = new FormLayout();
             formLayout = formulario(formLayout);
             formLayout.setResponsiveSteps(
                 new ResponsiveStep("0", 6)
-            );
+                );
             formLayout.setId("registra-gasto");
             
             containerFormulario.add(formLayout);
-            add(containerFormulario, containerResultado, containerBotoes);
+                
+            this.containerResultado.addClassName("container");
+            this.containerResultado.setVisible(false);
+            cabecalho();
+            
+
+            
+            this.containerBotoes.addClassName("container");
+            this.containerBotoes.setVisible(true);
+            this.containerBotoes.setId("container-botoes");
+            containterBotoes();
+
+            add(containerFormulario, this.containerResultado, this.containerBotoes);
         
         } 
+    }
+    private void containterBotoes() {
+        Button cancelar = new Button("Cancelar");
+        cancelar.addClassName("botoes-fim");
+        cancelar.addThemeVariants(ButtonVariant.LUMO_PRIMARY, ButtonVariant.LUMO_ERROR);
+        cancelar.addClickListener(e -> {
+            VaadinSession.getCurrent().setAttribute("analiseAtual", null);
+            UI.getCurrent().navigate("");
+        });
+
+        Button finalizar = new Button("Finalizar");
+        finalizar.addClassName("botoes-fim");
+        finalizar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        finalizar.addClickListener(e -> {
+            if(this.analise.getTotalDeItensGastos() > 1){
+                VaadinSession.getCurrent().setAttribute("analiseAtual", this.analise);
+                UI.getCurrent().navigate("Resultado");
+            }
+        });
+
+        this.containerBotoes.add(cancelar, finalizar);
+    }
+    private void cabecalho(){
+        HorizontalLayout cabecalho = new HorizontalLayout();
+        Span nome = new Span("Nome");
+        Span tipo = new Span("Tipo");
+        Span classificacao = new Span("Classificacao");
+        Span valor = new Span("Valor");
+        cabecalho.add(nome, tipo, classificacao, valor);
+        cabecalho.setId("cabecalho");
+        Div horizontalRule = new Div();
+        horizontalRule.addClassName("horizontal-rule");
+        this.containerResultado.add(cabecalho, horizontalRule);
+        scrollableContainer.getStyle().set("overflow", "auto");
+        scrollableContainer.setHeight("25rem"); 
+        scrollableContainer.addClassName("scroller");
+        this.containerResultado.add(this.scrollableContainer);
+
     }
 
     private FormLayout formulario(FormLayout formLayout){
@@ -99,10 +158,12 @@ public class GastosView extends VerticalLayout {
                 classificacao.clear(); 
                 subClassificacao.clear(); 
                 preco.clear();
+                this.totalGastos = this.totalGastos + 1;
+                previwGastos();
             }
             System.out.println(this.analise.getListaDeGastosString());
         });
-        formLayout.getElement().getStyle().set("justify-content", "space-between");  
+        formLayout.getElement().getStyle().set("justify-content", "center");  
         formLayout.add(nomeGasto, tipo, classificacao, subClassificacao, preco, salvar);
         return formLayout;
     }
@@ -168,6 +229,44 @@ public class GastosView extends VerticalLayout {
             registrarGastos(valorNome, intTipo, intClassificacao, intSubClassificacao, doublePreco);
         }
         return valida;
+    }
+
+    private void previwGastos() {
+        if(!this.containerResultado.isVisible()){
+            this.containerResultado.setVisible(true);
+        }
+        
+        HorizontalLayout linhaGasto = new HorizontalLayout();
+
+        Gasto gastoAtual = this.analise.getUltimoGasto();
+        
+        Span nome = new Span(gastoAtual.getNome());
+        nome.setClassName("gastos");
+        Span tipo = new Span(gastoAtual.getTipoString());
+        tipo.setClassName("gastos");
+        Span classificacao = new Span(gastoAtual.getClassificacao());
+        classificacao.setClassName("gastos");
+        Span valor = new Span(String.valueOf(gastoAtual.getValor()));
+        valor.setClassName("gastos");
+        Button excluir = new Button(new Icon(VaadinIcon.CLOSE_SMALL));
+        excluir.addClassName("botao");
+        excluir.addThemeVariants(ButtonVariant.LUMO_ICON, ButtonVariant.LUMO_ERROR);
+        excluir.setTooltipText("Apagar esse gasto");
+        excluir.addClickListener(e -> {
+            // Remove a linhaGasto do layout pai
+            this.scrollableContainer.remove(linhaGasto);
+
+            // Além disso, você pode chamar a função para remover da classe
+            this.analise.excluirGasto(gastoAtual.getId());
+
+            if(this.analise.getTotalDeItensGastos() == 0){
+                this.containerResultado.setVisible(false);
+            }
+        });
+        
+        linhaGasto.addClassName("linhas-gasto");
+        linhaGasto.add(nome, tipo, classificacao, valor, excluir);
+        this.scrollableContainer.add(linhaGasto);
     }
 
     

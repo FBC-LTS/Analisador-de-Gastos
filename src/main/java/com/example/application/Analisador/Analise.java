@@ -32,7 +32,6 @@ public class Analise {
         this.faturamento = faturamento;
     }
 
-
     public void registrarGasto(String nome, double valor, int tipo, int codCategoria, int subCategoria) {
         this.currentId = this.currentId + 1;
         Gasto novoGasto = new Gasto(nome, this.currentId, valor, tipo, codCategoria, subCategoria);
@@ -253,5 +252,18 @@ public class Analise {
             sb.append(gasto.leitor()).append("\n");
         }
         return sb.toString();
+    }
+
+    public Gasto getUltimoGasto() {
+        if (listaDeGastos == null || listaDeGastos.isEmpty()) {
+            return null; // Retorna null se a listaDeGastos for nula ou vazia
+        }
+        return listaDeGastos.get(listaDeGastos.size() - 1);
+    }
+    public int getTotalDeItensGastos() {
+        if (this.listaDeGastos == null) {
+            return 0;
+        }
+        return this.listaDeGastos.size();
     }
 }

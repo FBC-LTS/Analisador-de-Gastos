@@ -37,6 +37,10 @@ public class Gasto {
         return this.tipo;
     }
 
+    public String getTipoString() {
+        return this.tipo == 0 ? "Passivo" : "Ativo";
+    }
+
     public String getClassificacao() {
         return this.classificacao.nome;
     }

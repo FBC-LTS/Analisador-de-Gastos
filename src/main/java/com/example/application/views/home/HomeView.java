@@ -17,8 +17,10 @@ import com.vaadin.flow.router.Route;
 @StyleSheet("./estilos/home.css")
 public class HomeView extends HorizontalLayout{
     public HomeView() {
+        int numero = 0;
+        
         VerticalLayout container = new VerticalLayout();
-        container.addClassName("container");
+        container.addClassName("container-home");
         container.getElement().getStyle().set("width", "50%");
         container.getElement().getStyle().set("margin-left", "25%");
 

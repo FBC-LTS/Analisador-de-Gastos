@@ -1,8 +1,8 @@
-.container {
+.container-home {
     display: flex;
     justify-content: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     width: 642px;
     border-radius: 12px;
     border: 1px solid rgba(0, 0, 0, 0.20);
@@ -10,15 +10,19 @@
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
 .titulo{
-    margin-bottom: 15%;
+    margin-bottom: 3rem;
     align-self: center;
 
 }
-p {
+.container-home > p {
     margin-left: 5%;
     margin-right: 5%;
+    margin-top: 2rem;
 }
 .iniciar {
     align-self: center;
+}
+.container-home > vaadin-button {
+    width: 40%;
 }
  
