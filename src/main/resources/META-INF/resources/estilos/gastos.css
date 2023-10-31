@@ -1,6 +1,5 @@
-.botao {
-    margin-top: 20px;
-    margin-bottom: 20px;
+.botao-salvar {
+    margin-top: 3.3rem;
 }
 .horizontal-rule {
     width: 100%; 
@@ -28,6 +27,8 @@
 #registra-gasto{
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
+    justify-items: center;
 }
 
 .input-form {

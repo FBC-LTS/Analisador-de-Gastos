@@ -46,11 +46,9 @@ public class GastosView extends VerticalLayout {
             containerFormulario.addClassName("registro-gasto");
             
             
-            FormLayout formLayout = new FormLayout();
+            HorizontalLayout formLayout = new HorizontalLayout();
             formLayout = formulario(formLayout);
-            formLayout.setResponsiveSteps(
-                new ResponsiveStep("0", 6)
-                );
+            
             formLayout.setId("registra-gasto");
             
             containerFormulario.add(formLayout);
@@ -109,7 +107,7 @@ public class GastosView extends VerticalLayout {
 
     }
 
-    private FormLayout formulario(FormLayout formLayout){
+    private HorizontalLayout formulario(HorizontalLayout formLayout){
 
         TextField nomeGasto = new TextField("Nome:");
         nomeGasto.addClassName("input-form");
@@ -118,16 +116,19 @@ public class GastosView extends VerticalLayout {
         
         ComboBox<String> tipo = new ComboBox<>("Tipo");
         tipo.setItems("Ativo", "Passivo");
+        tipo.addClassName("input-form");
         
         ComboBox<String> classificacao = new ComboBox<>("Classificação");
         classificacao.setItems("Desembolso", "Perda", "Retornável", "Relacionado a produção?");
         classificacao.setVisible(false);
+        classificacao.addClassName("input-form");
         
         
         ComboBox<String> subClassificacao = new ComboBox<>("Sub-classificação:");
         subClassificacao.setItems("Indiretamente", "Diretamente comercial", "Diretamente industrial");
         subClassificacao.setVisible(false);
-        
+        subClassificacao.addClassName("input-form");
+
         classificacao.addValueChangeListener(event -> {
             String selectedValue = event.getValue();
             if ("Relacionado a produção?".equals(selectedValue)) {
@@ -153,7 +154,7 @@ public class GastosView extends VerticalLayout {
         preco.setPrefixComponent(new Span("R$:"));
 
         Button salvar = new Button("Salvar");
-        salvar.addClassName("botao");
+        salvar.addClassName("botao-salvar");
         salvar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         salvar.addClickListener(e -> {
             String valorNome = nomeGasto.getValue();
@@ -175,7 +176,7 @@ public class GastosView extends VerticalLayout {
             }
             System.out.println(this.analise.getListaDeGastosString());
         });
-        formLayout.getElement().getStyle().set("justify-content", "center");  
+        formLayout.getElement().getStyle().set("justify-content", "space-between");  
         formLayout.add(nomeGasto, tipo, classificacao, subClassificacao, preco, salvar);
         return formLayout;
     }
