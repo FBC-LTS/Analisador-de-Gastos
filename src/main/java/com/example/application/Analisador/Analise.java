@@ -4,6 +4,7 @@ import com.example.application.Analisador.tiposPack.Gasto;
 import com.example.application.Analisador.tiposPack.Classificacao;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -59,26 +60,26 @@ public class Analise {
     }
 
     private void somarAtivo(Gasto novoGasto) {
-        if (novoGasto.getTipo() == 0) { // Verifica se o novo gasto é ativo
+        if (novoGasto.getTipo() == 1) { // Verifica se o novo gasto é ativo
             totalAtivo += novoGasto.valor; // Soma o valor do novo gasto ao total ativo
         } // Se for um passivo, retira do total de ativo
 
     }
 
     private void subtrairAtivo(Gasto gastoToRemove) {
-        if (gastoToRemove.getTipo() == 0) { // Verifica se o novo gasto é ativo
+        if (gastoToRemove.getTipo() == 1) { // Verifica se o novo gasto é ativo
             totalAtivo -= gastoToRemove.valor; // Subtrai o valor do gasto que está sendo removido do total ativo
         }
     }
 
     private void somarPassivo(Gasto novoGasto) {
-        if (novoGasto.getTipo() == 1) {
+        if (novoGasto.getTipo() == 0) {
             totalPassivo += novoGasto.valor;
         }
     }
 
     private void subtrairPassivo(Gasto gastoToRemove) {
-        if (gastoToRemove.getTipo() == 1) {
+        if (gastoToRemove.getTipo() == 0) {
             totalPassivo -= gastoToRemove.valor;
         }
     }
@@ -88,7 +89,7 @@ public class Analise {
         return this.patLiq;
     }
 
-    public void exportador() {
+    public void exportadorComo() {
         String baseNomeArquivo = this.titulo;
         String nomeArquivo = baseNomeArquivo + ".csv";
         int contador = 2;
@@ -129,6 +130,29 @@ public class Analise {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public byte[] exportador() {
+        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8))) {
+    
+            writer.write("Nome, Valor, Tipo, Classificação\n");
+    
+            for (Gasto gasto : this.listaDeGastos) {
+                writer.write(gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Passivo" : "Ativo") + ", " + gasto.getClassificacao() + "\n");
+            }
+            writer.write("Fim dos gastos!\n");
+            String valorFormatado = String.format(
+                "\n Faturamento: %s, Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s \n",
+                formatarValor(getFaturamento()), formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatrimonioLiquido())
+            );
+            writer.write(valorFormatado);
+    
+            // Retorna os bytes do arquivo gerado
+            return outputStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public int mapearTipo(String tipo) {
