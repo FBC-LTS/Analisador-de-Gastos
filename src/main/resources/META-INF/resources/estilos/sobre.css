@@ -18,8 +18,17 @@
 .negrito {
   font-weight: bold;
 }
+
 .autores {
-  width: 5%;
-  background-color:aliceblue;
+ width: 5%;
 }
 
+#container-alunos {
+  margin-left: 5%;
+  margin-top: 27px;
+}
+
+p {
+  margin-top: 27px;
+  margin-left: 5%;
+}

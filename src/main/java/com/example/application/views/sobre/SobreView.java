@@ -81,7 +81,9 @@ public class SobreView extends VerticalLayout {
         VerticalLayout alunos = new VerticalLayout();
     
         alunos.addClassName("container");
-        
+        alunos.setId("container-alunos");
+        alunos.getElement().getStyle().set("width", "80%");
+
         VerticalLayout fabricio = new VerticalLayout();
         fabricio = campoAutor(fabricio,
             " Fabrício Lustosa de Oliveira Alencar Cunha.",
@@ -157,7 +159,6 @@ public class SobreView extends VerticalLayout {
             containerCurso,
             containerResponsabilidade
         );
-        container.getElement().getThemeList().clear();
         return container;
     }
 
