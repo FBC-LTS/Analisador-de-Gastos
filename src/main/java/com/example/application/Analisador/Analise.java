@@ -131,33 +131,27 @@ public class Analise {
             e.printStackTrace();
         }
     }
-    public byte[] exportador() {
-        try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-             OutputStreamWriter writer = new OutputStreamWriter(outputStream, StandardCharsets.UTF_8)) {
-    
-    
-            writer.write("Nome, Valor, Tipo, Classificação\n");
-    
-            for (Gasto gasto : listaDeGastos) {
-                String linha = gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Passivo" : "Ativo") + ", " + gasto.getClassificacao() + "\n";
-                System.out.println("Linha do CSV: " + linha); // Adicione esta linha para depurar
-                writer.write(linha);
-            }
-    
-            writer.write("Fim dos gastos!\n");
-            String valorFormatado = String.format(
-                "\n Faturamento: %s, Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s \n",
+
+    private String escvever(String base, String adicao){
+        return base += adicao;
+    }
+
+    public String csvString() {
+        String csv = "";
+        csv = escvever(csv, "Nome, Valor, Tipo, Classificação\n");
+        for (Gasto gasto : listaDeGastos) {
+            String linha = gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Passivo" : "Ativo") + ", " + gasto.getClassificacao() + "\n";
+            csv = escvever(csv, linha);
+        }
+        
+        csv = escvever(csv, "Fim dos gastos!\n");
+        String valorFormatado = String.format("\n Faturamento: %s, Total de Ativos: %s, Total de Passivos: %s, Patrimônio Líquido: %s \n",
                 formatarValor(getFaturamento()), formatarValor(getTotalAtivo()), formatarValor(getTotalPassivo()), formatarValor(getPatrimonioLiquido())
             );
-            System.out.println("Valores formatados: " + valorFormatado); // Adicione esta linha para depurar
-            writer.write(valorFormatado);
+        
+        csv = escvever(csv, valorFormatado);
     
-            // Retorna os bytes do arquivo gerado
-            return outputStream.toByteArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return csv;
     }
 
     public int mapearTipo(String tipo) {

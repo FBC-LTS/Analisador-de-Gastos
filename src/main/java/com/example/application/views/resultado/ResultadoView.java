@@ -1,7 +1,9 @@
 package com.example.application.views.resultado;
 
 import java.io.ByteArrayInputStream;
+import java.io.UnsupportedEncodingException;
 
+import org.apache.commons.io.IOUtils;
 import com.example.application.Analisador.Analise;
 import com.example.application.Analisador.tiposPack.Gasto;
 import com.example.application.views.MainLayout;
@@ -29,20 +31,22 @@ import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 @StyleSheet("./estilos/resultado.css")
 public class ResultadoView extends VerticalLayout {
     Analise analise = (Analise) VaadinSession.getCurrent().getAttribute("analiseAtual");
+
     public ResultadoView() {
-        if (this.analise == null){
+        if (this.analise == null) {
             UI.getCurrent().navigate("");
-        }else{
+        } else {
             VerticalLayout containerPricipal = new VerticalLayout();
             VerticalLayout containerBotoes = new VerticalLayout();
             containerPricipal.addClassName("container-resultados");
             containerPricipal = resultados(containerPricipal);
             containerBotoes = containerBotoes(containerBotoes);
 
-            add(containerPricipal,containerBotoes);
+            add(containerPricipal, containerBotoes);
         }
 
     }
+
     private VerticalLayout containerBotoes(VerticalLayout container) {
         Button cancelar = new Button("Voltar Inicio");
         cancelar.addClassName("botoes-fim");
@@ -52,30 +56,39 @@ public class ResultadoView extends VerticalLayout {
             UI.getCurrent().navigate("");
         });
 
-        byte[] csvBytes = this.analise.exportador();
-
-        System.out.println(csvBytes);
+        String csvString = this.analise.csvString();
+        
         // Crie um StreamResource a partir dos bytes do arquivo CSV
         String titulo = this.analise.getTitulo();
         String nomeArquivo = titulo.strip().replaceAll(" ", "_") + ".csv";
-        StreamResource resource = new StreamResource(nomeArquivo, () -> new ByteArrayInputStream(csvBytes));
         
-        Anchor baixar = new Anchor(resource, "Baixar CSV");
-        baixar.getElement().setAttribute("download", true);
-        
+        StreamResource resource = new StreamResource(nomeArquivo, () -> {
+                byte[] csvBytes;
+                try {
+                    csvBytes = csvString.getBytes("UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    // Lidere com a exceção, se necessário.
+                    csvBytes = csvString.getBytes(); // Use a codificação padrão se UTF-8 não estiver disponível.
+                }
+                return new ByteArrayInputStream(csvBytes);
+        });
 
+        Anchor baixar = new Anchor(resource, "Baixar em CSV");
+        baixar.setId("baixar");
         
         container.add(cancelar, baixar);
+        
         return container;
     }
+
     private VerticalLayout resultados(VerticalLayout containerPricipal) {
         H1 tituloAnalise = new H1(this.analise.getTitulo());
-        
+
         Div horizontalRule = new Div();
         horizontalRule.addClassName("horizontal-rule");
 
         HorizontalLayout cabecalhos = new HorizontalLayout();
-        
+
         Span ativos = new Span("Total de ativos:");
         ativos.addClassName("negrito");
         Span valorAtivos = new Span(String.valueOf(this.analise.totalAtivo));
@@ -107,13 +120,13 @@ public class ResultadoView extends VerticalLayout {
 
         Div scrollableContainer = new Div();
         scrollableContainer.getStyle().set("overflow", "auto");
-        scrollableContainer.setHeight("25rem"); 
+        scrollableContainer.setHeight("25rem");
         scrollableContainer.addClassName("scroller");
 
-        for(Gasto gastoAtual : this.analise.getListaDeGastos()){
+        for (Gasto gastoAtual : this.analise.getListaDeGastos()) {
 
             HorizontalLayout linhaGasto = new HorizontalLayout();
-    
+
             Span nome = new Span(gastoAtual.getNome());
             nome.setClassName("gastos");
             Span tipo = new Span(gastoAtual.getTipoString());
@@ -122,10 +135,10 @@ public class ResultadoView extends VerticalLayout {
             classificacao.setClassName("gastos");
             Span valor = new Span(String.valueOf(gastoAtual.getValor()));
             valor.setClassName("gastos");
-    
+
             linhaGasto.addClassName("linhas-gasto");
             linhaGasto.add(nome, tipo, classificacao, valor);
-    
+
             scrollableContainer.add(linhaGasto);
 
         }
