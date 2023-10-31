@@ -56,7 +56,9 @@ public class ResultadoView extends VerticalLayout {
 
         System.out.println(csvBytes);
         // Crie um StreamResource a partir dos bytes do arquivo CSV
-        StreamResource resource = new StreamResource("seuarquivo.csv", () -> new ByteArrayInputStream(csvBytes));
+        String titulo = this.analise.getTitulo();
+        String nomeArquivo = titulo.strip().replaceAll(" ", "_") + ".csv";
+        StreamResource resource = new StreamResource(nomeArquivo, () -> new ByteArrayInputStream(csvBytes));
         
         Anchor baixar = new Anchor(resource, "Baixar CSV");
         baixar.getElement().setAttribute("download", true);
