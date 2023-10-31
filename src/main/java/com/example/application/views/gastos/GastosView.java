@@ -123,15 +123,7 @@ public class GastosView extends VerticalLayout {
         classificacao.setItems("Desembolso", "Perda", "Retornável", "Relacionado a produção?");
         classificacao.setVisible(false);
         
-        tipo.addValueChangeListener(event -> {
-            String selectedValue = event.getValue();
-            if ("Passivo".equals(selectedValue)) {
-                classificacao.setVisible(true); // Torna a ComboBox classificacao visível
-            } else {
-                classificacao.setVisible(false); // Torna a ComboBox classificacao invisível
-            }
-        });
-
+        
         ComboBox<String> subClassificacao = new ComboBox<>("Sub-classificação:");
         subClassificacao.setItems("Indiretamente", "Diretamente comercial", "Diretamente industrial");
         subClassificacao.setVisible(false);
@@ -145,6 +137,15 @@ public class GastosView extends VerticalLayout {
             }
         });
 
+        tipo.addValueChangeListener(event -> {
+            String selectedValue = event.getValue();
+            if ("Passivo".equals(selectedValue)) {
+                classificacao.setVisible(true); // Torna a ComboBox classificacao visível
+            } else {
+                classificacao.setVisible(false);
+                subClassificacao.setVisible(false); // Torna a ComboBox classificacao invisível
+            }
+        });
         TextField preco = new TextField("Preço:");
         preco.addClassName("input-form");
         preco.setClearButtonVisible(true);
@@ -200,14 +201,7 @@ public class GastosView extends VerticalLayout {
         }
 
         // atribuindo o valor de acordo com o selecionado, caso não selecionado os parametros serão invalidos
-        if (valorTipo == "Ativo"){
-            intTipo = 1;
-            intClassificacao = 5;
-        }else if (valorTipo == "Passivo"){
-            intTipo = 0;
-        }else {
-            valida = false;
-        }
+        
 
         // verifica casos nulos 
         if (valorTipo == "Passivo" && valorClassificacao == null){
@@ -234,6 +228,15 @@ public class GastosView extends VerticalLayout {
                 intClassificacao = 4;
                 intSubClassificacao = 2;
             }
+        }
+        if (valorTipo == "Ativo"){
+            intTipo = 1;
+            intClassificacao = 5;
+            intSubClassificacao = 0;
+        }else if (valorTipo == "Passivo"){
+            intTipo = 0;
+        }else {
+            valida = false;
         }
         
         doublePreco =  Double.parseDouble(valorPreco);
