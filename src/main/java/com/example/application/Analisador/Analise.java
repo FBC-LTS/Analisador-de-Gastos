@@ -2,13 +2,15 @@ package com.example.application.Analisador;
 import java.util.List;
 import com.example.application.Analisador.tiposPack.Gasto;
 import com.example.application.Analisador.tiposPack.Classificacao;
-
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,19 +23,19 @@ import java.io.FileReader;
 
 public class Analise {
     private List<Gasto> listaDeGastos = new ArrayList<>();
-    private double faturamento;
+    private BigDecimal faturamento;
     private String titulo;
-    public double totalAtivo;
-    public double totalPassivo;
-    public double patLiq;
+    public BigDecimal totalAtivo;
+    public BigDecimal totalPassivo;
+    public BigDecimal patLiq;
     private int currentId;
 
-    public Analise(double faturamento, String titulo) {
+    public Analise(BigDecimal faturamento, String titulo) {
         this.titulo = titulo;
         this.faturamento = faturamento;
     }
 
-    public void registrarGasto(String nome, double valor, int tipo, int codCategoria, int subCategoria) {
+    public void registrarGasto(String nome, BigDecimal valor, int tipo, int codCategoria, int subCategoria) {
         this.currentId = this.currentId + 1;
         Gasto novoGasto = new Gasto(nome, this.currentId, valor, tipo, codCategoria, subCategoria);
         listaDeGastos.add(novoGasto);
@@ -43,7 +45,7 @@ public class Analise {
     }
 
     public void excluirGasto(int id) { // método para encontrar e remover uma instância da gasto dentro da
-                                       // listaDeGastos utilizando a variável "id" da classe Gasto
+        // listaDeGastos utilizando a variável "id" da classe Gasto
         Gasto gastoToRemove = null;
         for (Gasto gasto : listaDeGastos) {
             if (gasto.getId() == (id)) {
@@ -61,31 +63,31 @@ public class Analise {
 
     private void somarAtivo(Gasto novoGasto) {
         if (novoGasto.getTipo() == 1) { // Verifica se o novo gasto é ativo
-            totalAtivo += novoGasto.valor; // Soma o valor do novo gasto ao total ativo
+            totalAtivo = totalAtivo.add(novoGasto.valor); // Soma o valor do novo gasto ao total ativo
         } // Se for um passivo, retira do total de ativo
 
     }
 
     private void subtrairAtivo(Gasto gastoToRemove) {
         if (gastoToRemove.getTipo() == 1) { // Verifica se o novo gasto é ativo
-            totalAtivo -= gastoToRemove.valor; // Subtrai o valor do gasto que está sendo removido do total ativo
+            totalAtivo = totalAtivo.subtract(gastoToRemove.valor); // Subtrai o valor do gasto que está sendo removido do total ativo
         }
     }
 
     private void somarPassivo(Gasto novoGasto) {
         if (novoGasto.getTipo() == 0) {
-            totalPassivo += novoGasto.valor;
+            totalPassivo = totalPassivo.add(novoGasto.valor);
         }
     }
 
     private void subtrairPassivo(Gasto gastoToRemove) {
         if (gastoToRemove.getTipo() == 0) {
-            totalPassivo -= gastoToRemove.valor;
+            totalPassivo = totalPassivo.subtract(gastoToRemove.valor);
         }
     }
 
-    public double getPatrimonioLiquido() {
-        this.patLiq = totalAtivo - totalPassivo;
+    public BigDecimal getPatrimonioLiquido() {
+        this.patLiq = totalAtivo.subtract(totalPassivo); 
         return this.patLiq;
     }
 
@@ -140,7 +142,7 @@ public class Analise {
         String csv = "";
         csv = escvever(csv, "Nome, Valor, Tipo, Classificação\n");
         for (Gasto gasto : listaDeGastos) {
-            String linha = gasto.getNome() + ", " + gasto.getValor() + ", " + (gasto.getTipo() == 0 ? "Passivo" : "Ativo") + ", " + gasto.getClassificacao() + "\n";
+            String linha = gasto.getNome() + ", " + gasto.getValor().toString() + ", " + (gasto.getTipo() == 0 ? "Passivo" : "Ativo") + ", " + gasto.getClassificacao() + "\n";
             csv = escvever(csv, linha);
         }
         
@@ -212,7 +214,7 @@ public class Analise {
 
                 String[] dados = line.split(",");
                 String nome = dados[0];
-                double valor = Double.parseDouble(dados[1]);
+                BigDecimal valor = new BigDecimal(dados[1]);
                 String tipoString = dados[2].trim();
                 int tipo = mapearTipo(tipoString);
                 String classificacao = dados[3]; // Classificação completa
@@ -255,9 +257,9 @@ public class Analise {
     }
 
     // Necessário para usar "." invés de "," na formatação
-    private String formatarValor(double valor) {
-        DecimalFormat df = new DecimalFormat("#0.00", new DecimalFormatSymbols(Locale.US));
-        return df.format(valor);
+    private String formatarValor(BigDecimal valor) {
+        BigDecimal valorFormatado = valor.setScale(2, RoundingMode.HALF_UP);
+        return valorFormatado.toString();
     }
 
     // Getters e Setters
@@ -265,7 +267,7 @@ public class Analise {
         return this.titulo;
     }
 
-    public double getFaturamento() {
+    public BigDecimal getFaturamento() {
         return this.faturamento;
     }
 
@@ -273,11 +275,11 @@ public class Analise {
         return listaDeGastos;
     }
 
-    public double getTotalAtivo() {
+    public BigDecimal getTotalAtivo() {
         return totalAtivo;
     }
 
-    public double getTotalPassivo() {
+    public BigDecimal getTotalPassivo() {
         return totalPassivo;
     }
 

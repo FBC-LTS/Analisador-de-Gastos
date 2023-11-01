@@ -1,5 +1,6 @@
 package com.example.application.views.inicio;
 
+import java.math.BigDecimal;
 import com.example.application.Analisador.Analise;
 import com.example.application.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
@@ -70,12 +71,12 @@ public class InicioView extends VerticalLayout {
         continuar.addClickListener(e -> {
             // Obter os valores dos campos
             String valorTitulo = titulo.getValue();
-            String valorFaturamento = faturamento.getValue();
-            double faturamentoValor;
+            BigDecimal valorFaturamento = new BigDecimal(faturamento.getValue());
+
             // Validar os dados
-            if (isValid(valorTitulo, valorFaturamento)) {
-                faturamentoValor = Double.parseDouble(valorFaturamento);
-                Analise analise = new Analise(faturamentoValor, valorTitulo);
+            if (isValid(valorTitulo, valorFaturamento.toString())) {
+
+                Analise analise = new Analise(valorFaturamento, valorTitulo);
                 // guarda na sessão o objeto analise
                 VaadinSession.getCurrent().setAttribute("analiseAtual", analise);
                 // ir para a pagina de gastos

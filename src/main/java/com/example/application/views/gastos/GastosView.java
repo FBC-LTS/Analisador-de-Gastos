@@ -1,5 +1,8 @@
 package com.example.application.views.gastos;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import com.example.application.Analisador.Analise;
 import com.example.application.Analisador.tiposPack.Gasto;
 import com.example.application.views.MainLayout;
@@ -150,6 +153,7 @@ public class GastosView extends VerticalLayout {
         TextField preco = new TextField("Preço:");
         preco.addClassName("input-form");
         preco.setClearButtonVisible(true);
+        preco.setPattern("^\\$?\\d+(?:\\.\\d{1,2})?$");
         preco.setTooltipText("informe o preço/ valor do gasto em numero, com '.' separando as casas decimais");
         preco.setPrefixComponent(new Span("R$:"));
 
@@ -162,6 +166,7 @@ public class GastosView extends VerticalLayout {
             String valorClassificacao = classificacao.getValue();
             String valorSubClassificacao = subClassificacao.getValue();
             String valorPreco = preco.getValue();
+            System.out.println(valorPreco);
 
             Boolean valida = validarGastos(valorNome, valorTipo, valorClassificacao, valorSubClassificacao, valorPreco);
             System.out.println(valida);
@@ -182,7 +187,7 @@ public class GastosView extends VerticalLayout {
     }
     
     
-    private void registrarGastos(String valorNome, int valorTipo, int valorClassificacao, int valorSubClassificacao, double valorPreco){
+    private void registrarGastos(String valorNome, int valorTipo, int valorClassificacao, int valorSubClassificacao, BigDecimal valorPreco){
 
         this.analise.registrarGasto(valorNome, valorPreco, valorTipo, valorClassificacao, valorSubClassificacao);
     
@@ -194,8 +199,8 @@ public class GastosView extends VerticalLayout {
         int intTipo = 0; 
         int intClassificacao = 0; 
         int intSubClassificacao = 0;
-        Double doublePreco;
-
+        BigDecimal preco = new BigDecimal(valorPreco);
+        System.out.println(preco.toString());
         // verificar o tamanho do nome do gasto
         if (valorNome.length() < 3){
             valida = false;
@@ -240,9 +245,8 @@ public class GastosView extends VerticalLayout {
             valida = false;
         }
         
-        doublePreco =  Double.parseDouble(valorPreco);
         if (valida){
-            registrarGastos(valorNome, intTipo, intClassificacao, intSubClassificacao, doublePreco);
+            registrarGastos(valorNome, intTipo, intClassificacao, intSubClassificacao, preco);
         }
         return valida;
     }
@@ -262,7 +266,7 @@ public class GastosView extends VerticalLayout {
         tipo.setClassName("gastos");
         Span classificacao = new Span(gastoAtual.getClassificacao());
         classificacao.setClassName("gastos");
-        Span valor = new Span(String.valueOf(gastoAtual.getValor()));
+        Span valor = new Span(formatarValor(gastoAtual.getValor()));
         valor.setClassName("gastos");
         Button excluir = new Button(new Icon(VaadinIcon.CLOSE_SMALL));
         excluir.addClassName("botao");
@@ -285,5 +289,8 @@ public class GastosView extends VerticalLayout {
         this.scrollableContainer.add(linhaGasto);
     }
 
-    
+    private String formatarValor(BigDecimal valor) {
+        BigDecimal valorFormatado = valor.setScale(2, RoundingMode.HALF_UP);
+        return valorFormatado.toString();
+    }
 }

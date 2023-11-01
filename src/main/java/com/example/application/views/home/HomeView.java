@@ -12,7 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@PageTitle("Home")
+@PageTitle("Analisador de gastos")
 @Route(value = "", layout = MainLayout.class)
 @StyleSheet("./estilos/home.css")
 public class HomeView extends HorizontalLayout{

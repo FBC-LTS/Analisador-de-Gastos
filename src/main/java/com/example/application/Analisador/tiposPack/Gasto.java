@@ -1,14 +1,15 @@
 package com.example.application.Analisador.tiposPack;
+import java.math.BigDecimal;
 
 public class Gasto {
     public String nome;
     public int id;
-    public double valor;
+    public BigDecimal valor;
     public int tipo; // 0= passivo ; 1= ativo ;
     private Classificacao classificacao;
 
     // contrutor com subcategoria
-    public Gasto(String nome, int id, double valor, int tipo, int codCategoria, int subCategoria) {
+    public Gasto(String nome, int id, BigDecimal valor, int tipo, int codCategoria, int subCategoria) {
         this.nome = nome;
         this.valor = valor;
         this.tipo = tipo; // 0= passivo ; 1= ativo ;
@@ -21,7 +22,7 @@ public class Gasto {
                 + ", Classificação: " + this.classificacao.nome;
     }
 
-    public double getValor() {
+    public BigDecimal getValor() {
         return this.valor;
     }
 

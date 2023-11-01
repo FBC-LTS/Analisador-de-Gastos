@@ -2,6 +2,8 @@ package com.example.application.views.resultado;
 
 import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.apache.commons.io.IOUtils;
 import com.example.application.Analisador.Analise;
@@ -91,32 +93,32 @@ public class ResultadoView extends VerticalLayout {
         horizontalRule.setId("rule1");
 
         HorizontalLayout cabecalhos = new HorizontalLayout();
-        cabecalhos.setClassName("cabecalhos");
+        cabecalhos.setClassName("cabecalhos-resultado");
 
         Span ativos = new Span("Total de ativos:");
         ativos.addClassName("negrito");
-        Span valorAtivos = new Span(String.valueOf(this.analise.totalAtivo));
+        Span valorAtivos = new Span(formatarValor(this.analise.totalAtivo));
         valorAtivos.addClassName("valor");
         Div divAtivos = new Div();
         divAtivos.add(ativos, valorAtivos);
 
         Span passivos = new Span("Total de passivos:");
         passivos.addClassName("negrito");
-        Span valorPassivos = new Span(String.valueOf(this.analise.totalPassivo));
+        Span valorPassivos = new Span(formatarValor(this.analise.totalPassivo));
         valorPassivos.addClassName("valor");
         Div divPassivos = new Div();
         divPassivos.add(passivos, valorPassivos);
 
         Span patrimonioLiquido = new Span("Total de Patrimônio líquido:");
         patrimonioLiquido.addClassName("negrito");
-        Span valorPatrimonioLiquido = new Span(String.valueOf(this.analise.getPatrimonioLiquido()));
+        Span valorPatrimonioLiquido = new Span(formatarValor(this.analise.getPatrimonioLiquido()));
         valorPatrimonioLiquido.addClassName("valor");
         Div divPatrimonioLiquido = new Div();
         divPatrimonioLiquido.add(patrimonioLiquido, valorPatrimonioLiquido);
 
         Span faturamento = new Span("Total de faturamento:");
         faturamento.addClassName("negrito");
-        Span valorFaturamento = new Span(String.valueOf(this.analise.getFaturamento()));
+        Span valorFaturamento = new Span(formatarValor(this.analise.getFaturamento()));
         valorFaturamento.addClassName("valor");
         Div divFaturamento = new Div();
         divFaturamento.add(faturamento, valorFaturamento);
@@ -142,22 +144,22 @@ public class ResultadoView extends VerticalLayout {
         Div scrollableContainer = new Div();
         scrollableContainer.getStyle().set("overflow", "auto");
         scrollableContainer.setHeight("25rem");
-        scrollableContainer.addClassName("scroller");
+        scrollableContainer.addClassName("scroller-resultado");
 
         for (Gasto gastoAtual : this.analise.getListaDeGastos()) {
 
             HorizontalLayout linhaGasto = new HorizontalLayout();
 
             Span nome = new Span(gastoAtual.getNome());
-            nome.setClassName("gastos");
+            nome.setClassName("gastos-resultado");
             Span tipo = new Span(gastoAtual.getTipoString());
-            tipo.setClassName("gastos");
+            tipo.setClassName("gastos-resultado");
             Span classificacao = new Span(gastoAtual.getClassificacao());
-            classificacao.setClassName("gastos");
-            Span valor = new Span(String.valueOf(gastoAtual.getValor()));
-            valor.setClassName("gastos valor");
+            classificacao.setClassName("gastos-resultado");
+            Span valor = new Span(formatarValor(gastoAtual.getValor()));
+            valor.setClassName("gastos-resultado valor-resultado");
 
-            linhaGasto.addClassName("linhas-gasto");
+            linhaGasto.addClassName("linhas-resultado-gasto");
             linhaGasto.add(nome, tipo, classificacao, valor);
 
             scrollableContainer.add(linhaGasto);
@@ -165,6 +167,10 @@ public class ResultadoView extends VerticalLayout {
         }
         containerPricipal.add(tituloAnalise, horizontalRule, cabecalhos, horizontalRule2,cabecalhoGastos, scrollableContainer);
         return containerPricipal;
+    }
+    private String formatarValor(BigDecimal valor) {
+        BigDecimal valorFormatado = valor.setScale(2, RoundingMode.HALF_UP);
+        return valorFormatado.toString();
     }
 
 }
