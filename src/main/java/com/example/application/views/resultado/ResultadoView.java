@@ -28,7 +28,7 @@ import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 
-@PageTitle("Resultado")
+@PageTitle("Analisador de Gastos")
 @Route(value = "Resultado", layout = MainLayout.class)
 @StyleSheet("./estilos/resultado.css")
 public class ResultadoView extends VerticalLayout {

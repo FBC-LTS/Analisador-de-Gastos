@@ -15,6 +15,7 @@ import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.formlayout.FormLayout.ResponsiveStep;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -25,8 +26,11 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
+import com.vaadin.flow.theme.lumo.LumoUtility.Display;
 
-@PageTitle("Gastos")
+
+@PageTitle("Analisador de Gastos")
 @Route(value = "Gastos", layout = MainLayout.class)
 @StyleSheet("./estilos/gastos.css")
 public class GastosView extends VerticalLayout {
@@ -47,15 +51,16 @@ public class GastosView extends VerticalLayout {
             VerticalLayout containerFormulario = new VerticalLayout();
             containerFormulario.addClassName("container");
             containerFormulario.addClassName("registro-gasto");
-            
+            H2 titulo = new H2("Insira os dados do gasto");
             
             HorizontalLayout formLayout = new HorizontalLayout();
             formLayout = formulario(formLayout);
             
             formLayout.setId("registra-gasto");
             
-            containerFormulario.add(formLayout);
-                
+            containerFormulario.add(titulo, formLayout);
+            containerFormulario.addClassNames(Display.FLEX, AlignItems.CENTER);
+
             this.containerResultado.addClassName("container");
             this.containerResultado.setVisible(false);
             cabecalho();
@@ -156,7 +161,7 @@ public class GastosView extends VerticalLayout {
         preco.setPattern("^\\$?\\d+(?:\\.\\d{1,2})?$");
         preco.setTooltipText("informe o preço/ valor do gasto em numero, com '.' separando as casas decimais");
         preco.setPrefixComponent(new Span("R$:"));
-
+        
         Button salvar = new Button("Salvar");
         salvar.addClassName("botao-salvar");
         salvar.addThemeVariants(ButtonVariant.LUMO_PRIMARY);

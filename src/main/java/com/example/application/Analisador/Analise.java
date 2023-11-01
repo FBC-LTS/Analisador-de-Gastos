@@ -23,11 +23,11 @@ import java.io.FileReader;
 
 public class Analise {
     private List<Gasto> listaDeGastos = new ArrayList<>();
-    private BigDecimal faturamento;
+    private BigDecimal faturamento = new BigDecimal("0");
     private String titulo;
-    public BigDecimal totalAtivo;
-    public BigDecimal totalPassivo;
-    public BigDecimal patLiq;
+    public BigDecimal totalAtivo = new BigDecimal("0");
+    public BigDecimal totalPassivo = new BigDecimal("0");
+    public BigDecimal patLiq = new BigDecimal("0");
     private int currentId;
 
     public Analise(BigDecimal faturamento, String titulo) {

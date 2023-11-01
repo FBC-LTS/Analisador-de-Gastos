@@ -25,7 +25,7 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.VaadinSession;
 
-@PageTitle("Inicio")
+@PageTitle("Analisador de Gastos")
 @Route(value = "Inicio", layout = MainLayout.class)
 @StyleSheet("./estilos/inicio.css")
 public class InicioView extends VerticalLayout {
@@ -50,12 +50,12 @@ public class InicioView extends VerticalLayout {
     private FormLayout criaForm(FormLayout formLayout){
 
         TextField titulo = new TextField("Titulo:");
-        titulo.addClassName("input-form");
+        titulo.addClassName("input-form-inicio");
         titulo.setClearButtonVisible(true);
         titulo.setTooltipText("Insira o titulo do projeto.");
     
         TextField faturamento = new TextField("Faturamento:");
-        faturamento.addClassName("input-form");
+        faturamento.addClassName("input-form-inicio");
         faturamento.setClearButtonVisible(true);
         faturamento.setTooltipText("informe o faturamento em numero");
         faturamento.setPrefixComponent(new Span("R$:"));

@@ -89,7 +89,7 @@ public class MainLayout extends AppLayout {
         logo.setWidth("50px");
         layout.add(logo);
         
-        H1 appName = new H1("Gestor de Gastos");
+        H1 appName = new H1("Analisador de Gastos");
         appName.addClassNames(Margin.Vertical.MEDIUM, Margin.End.AUTO, FontSize.LARGE);
         layout.add(appName);
 

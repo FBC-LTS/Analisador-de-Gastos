@@ -9,7 +9,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 
-@PageTitle("Documentação")
+@PageTitle("Analisador de Gastos")
 @Route(value = "Documentacao", layout = MainLayout.class)
 public class DocumentaçãoView extends VerticalLayout {
 
