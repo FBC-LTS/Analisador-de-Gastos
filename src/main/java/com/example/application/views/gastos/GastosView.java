@@ -200,13 +200,14 @@ public class GastosView extends VerticalLayout {
 
     private Boolean validarGastos(String valorNome, String valorTipo, String valorClassificacao, String valorSubClassificacao, String valorPreco){
         Boolean valida = true;
-        
+        valorNome = valorNome.replaceAll(",", ".");
+
         int intTipo = 0; 
         int intClassificacao = 0; 
         int intSubClassificacao = 0;
         BigDecimal preco = new BigDecimal(valorPreco);
         System.out.println(preco.toString());
-        // verificar o tamanho do nome do gasto
+        // verificar o tamanho do nome do gasto 
         if (valorNome.length() < 3){
             valida = false;
         }
