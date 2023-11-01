@@ -39,6 +39,7 @@ public class ResultadoView extends VerticalLayout {
             VerticalLayout containerPricipal = new VerticalLayout();
             VerticalLayout containerBotoes = new VerticalLayout();
             containerPricipal.addClassName("container-resultados");
+            containerBotoes.addClassName("container-botoes");
             containerPricipal = resultados(containerPricipal);
             containerBotoes = containerBotoes(containerBotoes);
 
@@ -74,6 +75,7 @@ public class ResultadoView extends VerticalLayout {
         });
 
         Anchor baixar = new Anchor(resource, "Baixar em CSV");
+        baixar.setClassName("botoes-fim");
         baixar.setId("baixar");
         
         container.add(cancelar, baixar);
@@ -86,37 +88,56 @@ public class ResultadoView extends VerticalLayout {
 
         Div horizontalRule = new Div();
         horizontalRule.addClassName("horizontal-rule");
+        horizontalRule.setId("rule1");
 
         HorizontalLayout cabecalhos = new HorizontalLayout();
+        cabecalhos.setClassName("cabecalhos");
 
         Span ativos = new Span("Total de ativos:");
         ativos.addClassName("negrito");
         Span valorAtivos = new Span(String.valueOf(this.analise.totalAtivo));
+        valorAtivos.addClassName("valor");
         Div divAtivos = new Div();
         divAtivos.add(ativos, valorAtivos);
 
         Span passivos = new Span("Total de passivos:");
         passivos.addClassName("negrito");
         Span valorPassivos = new Span(String.valueOf(this.analise.totalPassivo));
+        valorPassivos.addClassName("valor");
         Div divPassivos = new Div();
         divPassivos.add(passivos, valorPassivos);
 
         Span patrimonioLiquido = new Span("Total de Patrimônio líquido:");
         patrimonioLiquido.addClassName("negrito");
         Span valorPatrimonioLiquido = new Span(String.valueOf(this.analise.getPatrimonioLiquido()));
+        valorPatrimonioLiquido.addClassName("valor");
         Div divPatrimonioLiquido = new Div();
         divPatrimonioLiquido.add(patrimonioLiquido, valorPatrimonioLiquido);
 
         Span faturamento = new Span("Total de faturamento:");
         faturamento.addClassName("negrito");
         Span valorFaturamento = new Span(String.valueOf(this.analise.getFaturamento()));
+        valorFaturamento.addClassName("valor");
         Div divFaturamento = new Div();
         divFaturamento.add(faturamento, valorFaturamento);
 
         Div horizontalRule2 = new Div();
         horizontalRule2.addClassName("horizontal-rule");
+        horizontalRule2.setId("rule2");
 
         cabecalhos.add(divFaturamento, divAtivos, divPassivos, divPatrimonioLiquido);
+
+        Div cabecalhoGastos = new Div();
+        Span nomeCabecalho = new Span("Nome");
+        nomeCabecalho.addClassName("coluna");
+        Span tipoCabecalho = new Span("Tipo");
+        tipoCabecalho.addClassName("coluna");
+        Span classificacaoCabecalho = new Span("Classificacao");
+        classificacaoCabecalho.addClassName("coluna");
+        Span valorCabecalho = new Span("Valor");
+        valorCabecalho.addClassName("coluna");
+        cabecalhoGastos.add(nomeCabecalho, tipoCabecalho, classificacaoCabecalho, valorCabecalho);
+        cabecalhoGastos.setId("cabecalho-gastos");
 
         Div scrollableContainer = new Div();
         scrollableContainer.getStyle().set("overflow", "auto");
@@ -134,7 +155,7 @@ public class ResultadoView extends VerticalLayout {
             Span classificacao = new Span(gastoAtual.getClassificacao());
             classificacao.setClassName("gastos");
             Span valor = new Span(String.valueOf(gastoAtual.getValor()));
-            valor.setClassName("gastos");
+            valor.setClassName("gastos valor");
 
             linhaGasto.addClassName("linhas-gasto");
             linhaGasto.add(nome, tipo, classificacao, valor);
@@ -142,7 +163,7 @@ public class ResultadoView extends VerticalLayout {
             scrollableContainer.add(linhaGasto);
 
         }
-        containerPricipal.add(tituloAnalise, horizontalRule, cabecalhos, horizontalRule2, scrollableContainer);
+        containerPricipal.add(tituloAnalise, horizontalRule, cabecalhos, horizontalRule2,cabecalhoGastos, scrollableContainer);
         return containerPricipal;
     }
 
