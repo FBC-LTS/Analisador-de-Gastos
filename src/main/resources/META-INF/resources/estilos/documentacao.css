@@ -20,6 +20,28 @@ ul.textos-padroes {
 ol.textos-padroes {
     margin-top: -1px;
 }
+#container-principal {
+    margin-left: 10%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+#cont-csv {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+#cont-download {
+    height: 22%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 11%;
+    margin-left: -2%;
+    margin-right: 4%;
+    margin-bottom: 30px;
+}
 #cont-pre-resultado, #cont-resultado{
     width: 80%;
     margin-left: 10%;
@@ -27,9 +49,15 @@ ol.textos-padroes {
     justify-content: center;
     align-items: center;
 }
-#img-pre, #img-res{
+#img-download{
+    border-radius: 15px;
+    padding: 0.5rem;
+}
+#img-pre, #img-res, #img-csv {
     width: 98%;
     padding: 0.5rem;
+    border-radius: 15px;
+
 }
 #pre-resultadovideo {
     width: 28rem;

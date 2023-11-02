@@ -1,22 +1,15 @@
 package com.example.application.Analisador;
 import java.util.List;
 import com.example.application.Analisador.tiposPack.Gasto;
-import com.example.application.Analisador.tiposPack.Classificacao;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.io.BufferedReader;
 import java.io.FileReader;
 

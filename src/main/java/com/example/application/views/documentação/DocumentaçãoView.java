@@ -1,8 +1,6 @@
 package com.example.application.views.documentação;
 
 import com.example.application.views.MainLayout;
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Anchor;
@@ -18,12 +16,8 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.html.UnorderedList;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.dom.Style.Display;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.theme.lumo.LumoUtility.AlignItems;
-import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
-import com.vaadin.flow.theme.lumo.LumoUtility.Margin.Horizontal;
 
 
 @PageTitle("Analisador de Gastos")
@@ -184,14 +178,19 @@ public class DocumentaçãoView extends VerticalLayout {
         containerimg1.setId("cont-download");
         containerimg1.setClassName("base-container");
         Image img = new Image("./images/download.png", "Arquivo baixado com mesmo nome do Titulo da analise");
+        img.setId("img-download");
         containerimg1.add(img);
 
         Div containerimg2 = new Div();
         containerimg2.setId("cont-csv");
         containerimg2.setClassName("base-container");
         Image img2 = new Image("./images/csv-exemplo.png", "Arquivo csv");
+        img2.setId("img-csv");
         containerimg2.add(img2);
 
+
+        containerDownload.getElement().getStyle().set("width", "110%");
+        containerDownload.getElement().getStyle().set("margin-bottom", "30px");
         containerDownload.add(containerimg1, containerimg2);
 
         return containerDownload;

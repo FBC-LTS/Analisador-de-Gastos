@@ -2,10 +2,7 @@ package com.example.application.views;
 
 
 import com.example.application.views.documentação.DocumentaçãoView;
-import com.example.application.views.gastos.GastosView;
 import com.example.application.views.home.HomeView;
-import com.example.application.views.inicio.InicioView;
-import com.example.application.views.resultado.ResultadoView;
 import com.example.application.views.sobre.SobreView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
