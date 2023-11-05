@@ -7,7 +7,7 @@
 Uma web aplicação desenvolvida usando principalmente:
 
 - Java
-- Vaadin
+- Vaadin v24
 - CSS
 
 ## Extra
